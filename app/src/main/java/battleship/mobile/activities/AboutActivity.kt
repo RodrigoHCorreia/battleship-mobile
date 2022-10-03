@@ -11,27 +11,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import battleship.mobile.MockInfoService
+import battleship.mobile.data.appInfo
 import battleship.mobile.ui.theme.BattleshipmobileTheme
-
-data class Author(
-    val id: Int,
-    val name : String,
-    val email : String,
-)
-
-data class AppInfo(
-    val version : String,
-    val authors : List<Author>
-)
-
-val appInfo = AppInfo(
-    version = "0.0.1",
-    authors = listOf(
-        Author(48281, "Adolfo Morgado", "a48281@alunos.isel.pt"),
-        Author(48355, "Rodrigo Correia", "a48355@alunos.isel.pt")
-    )
-)
-
 class AboutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +24,9 @@ class AboutActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AboutView(appInfo);
+                    AboutView(appInfo)
+
+                    AboutView(MockInfoService().getServerInfo())
                 }
             }
         }
