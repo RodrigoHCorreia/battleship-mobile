@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import battleship.mobile.activities.Author
-import battleship.mobile.activities.appInfo
+import battleship.mobile.Author
+import battleship.mobile.ServerInfo
 import battleship.mobile.data.AppInfo
+import battleship.mobile.data.appInfo
 
 @Composable
 fun versionView(version: String) {
@@ -41,28 +42,46 @@ fun authorView(author: Author) {
 }
 
 @Composable
-fun AboutView(info: Info) {
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(10.dp)
-    ) {
-
-        Text("Authors:")
-        info.authors.forEach {
-            authorView(it)
-        }
-
-        Text("Version Info:")
-        versionView(info.version)
+fun AppInfoView(appInfo: AppInfo) {
+    Text(text= "App Info", style = MaterialTheme.typography.h4)
+    Text("Authors:")
+    appInfo.authors.forEach {
+        authorView(it)
     }
 
+    Text("Version Info:")
+    versionView(appInfo.version)
+}
+
+@Composable
+fun ServerInfoView(serverInfo : ServerInfo) {
+    Text(text= "Server Info", style = MaterialTheme.typography.h4)
+    Text("Authors:")
+    serverInfo.authors.forEach {
+        authorView(it)
+    }
+
+    Text("Version Info:")
+    versionView(serverInfo.version)
+}
+
+@Composable
+fun AboutView(appInfo: AppInfo, serverInfo : ServerInfo?) {
+    Column {
+        AppInfoView(appInfo = appInfo);
+        serverInfo?.let {
+            ServerInfoView(serverInfo = it);
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AboutPreview() {
     val info = appInfo
-    AboutView(info = info)
+    AboutView(
+        appInfo = info,
+        serverInfo = null
+    )
 }
 

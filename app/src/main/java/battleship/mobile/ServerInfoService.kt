@@ -15,7 +15,7 @@ interface ServerInfoService {
     suspend fun getServerInfo () : ServerInfo
 }
 
-class MockInfoService : ServerInfoService {
+class FakeServerInfoService : ServerInfoService {
     override suspend fun getServerInfo(): ServerInfo {
         return ServerInfo(
             version = "0.0.1",
