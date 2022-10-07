@@ -9,9 +9,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import battleship.mobile.screens.MainScreen
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,6 +23,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    MainScreen(
+                        onAboutRequest = { navigateToAboutScreen() }
+
+                    )
                     Button(
                         onClick = {
                             val intent = Intent(this, AboutActivity::class.java)
@@ -35,5 +38,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun navigateToAboutScreen() {
+        val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
     }
 }

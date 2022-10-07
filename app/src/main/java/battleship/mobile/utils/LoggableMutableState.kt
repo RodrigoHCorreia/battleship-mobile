@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
-class LoggedMutableState<T>(private val at: String, private val delegate: MutableState<T>)
-    : MutableState<T> by delegate {
+class LoggedMutableState<T>(private val at: String, private val delegate: MutableState<T>) :
+    MutableState<T> by delegate {
 
     override var value: T
         get() {

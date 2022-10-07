@@ -2,11 +2,14 @@ package battleship.mobile
 
 import android.app.Application
 
-class BattleshipApplication: DependenciesContainer, Application() {
-    override val serverInfoService: ServerInfoService
+const val TAG = "BattleShipApplication"
+
+class BattleshipApplication : DependenciesContainer, Application() {
+    override val serverService: ServerInfoService
+        // TODO: Exchange for the real implementation
         get() = FakeServerInfoService()
 }
 
 interface DependenciesContainer {
-    val serverInfoService: ServerInfoService
+    val serverService: ServerInfoService
 }
