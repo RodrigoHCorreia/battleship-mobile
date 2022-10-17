@@ -11,5 +11,5 @@ fun AboutScreen(
 ) {
     AboutView(appInfo)
     //TODO: serverInfo
-    AboutView()
+    AboutView(serverInfo)
 }

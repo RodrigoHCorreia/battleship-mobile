@@ -40,7 +40,8 @@ fun authorView(author: Author) {
 }
 
 @Composable
-fun AboutView(info: Info) {
+fun AboutView(info: Info?) {
+    if (info == null) return
     Column(
         modifier = Modifier
             .fillMaxHeight()

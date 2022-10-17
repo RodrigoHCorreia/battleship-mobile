@@ -8,7 +8,7 @@ class RankingActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BattleshipmobileTheme {
-
+                //TODO: Ranking Stuff
             }
         }
     }

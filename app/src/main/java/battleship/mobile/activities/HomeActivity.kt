@@ -10,22 +10,21 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
-import battleship.mobile.screens.MainScreen
+import battleship.mobile.screens.HomeScreen
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
-class MainActivity : ComponentActivity() {
+class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BattleshipmobileTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen(
-                        onAboutRequest = { navigateToAboutScreen() }
-
+                    HomeScreen(
+                        onAboutRequest = { navigateToAboutScreen() },
+                        onBackRequested = { finish() }
                     )
                     Button(
                         onClick = {
