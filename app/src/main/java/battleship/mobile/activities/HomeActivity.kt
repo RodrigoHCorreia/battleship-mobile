@@ -1,5 +1,7 @@
 package battleship.mobile.activities
 
+import RankingActivity
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,6 +16,16 @@ import battleship.mobile.screens.HomeScreen
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
 class HomeActivity : ComponentActivity() {
+
+    companion object {
+        fun navigate(origin: Activity) {
+            with(origin) {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -23,17 +35,12 @@ class HomeActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     HomeScreen(
-                        onAboutRequest = { navigateToAboutScreen() },
-                        onBackRequested = { finish() }
+                        // Navegacao no logout deve ser revista
+                        onMMRequest = { finish() },
+                        onRankingRequested = { RankingActivity.navigate(origin = this) },
+                        onLogoutRequested = { SignActivity.navigate(origin = this) },
+                        onAboutRequest = { AboutActivity.navigate(origin = this) }
                     )
-                    Button(
-                        onClick = {
-                            val intent = Intent(this, AboutActivity::class.java)
-                            startActivity(intent)
-                        }
-                    ) {
-                        Text("info lol")
-                    }
                 }
             }
         }

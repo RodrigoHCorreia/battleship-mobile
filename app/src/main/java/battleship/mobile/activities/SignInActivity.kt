@@ -23,7 +23,7 @@ class SignInActivity : ComponentActivity() {
         setContent {
             SignInScreen(
                 onBackRequested = { finish() },
-                onSubmit = { finish() }
+                onSubmit = { HomeActivity.navigate(origin = this) }
             )
         }
     }

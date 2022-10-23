@@ -1,5 +1,6 @@
 package battleship.mobile.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +13,16 @@ import battleship.mobile.screens.SignScreen
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
 class SignActivity : ComponentActivity() {
+
+    companion object {
+        fun navigate(origin: Activity) {
+            with(origin) {
+                val intent = Intent(this, SignActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -33,7 +33,12 @@
         <activity
             android:name=".activities.SignInActivity"
             android:exported="false" />
-        <activity android:name=".activities.AboutActivity" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
