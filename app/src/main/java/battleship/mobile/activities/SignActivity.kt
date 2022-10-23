@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import battleship.mobile.screens.SignScreen
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
@@ -24,8 +21,8 @@ class SignActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background,
                 ){
                     SignScreen(
-                        onSignUpRequested = { navigateToSignUpScreen() },
-                        onSignInRequested = { navigateToSignInScreen() },
+                        onSignUpRequested = { SignUpActivity.navigate(origin = this) },
+                        onSignInRequested = { SignInActivity.navigate(origin = this) },
                     )
                 }
             }

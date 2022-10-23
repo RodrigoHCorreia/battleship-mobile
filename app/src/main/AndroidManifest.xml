@@ -27,6 +27,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SignInActivity"
+            android:exported="false" />
         <activity android:name=".activities.AboutActivity" />
     </application>
 

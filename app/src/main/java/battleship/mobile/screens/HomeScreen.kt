@@ -6,10 +6,10 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import battleship.mobile.TAG
 import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.TopBar
 
 @Composable
 fun HomeScreen(
@@ -31,22 +31,16 @@ fun HomeScreen(
                 }
             },
             floatingActionButtonPosition = FabPosition.Center,
-            topBar = {
-                TopBar(
-                    onAboutRequest = onAboutRequest,
-                    onRankingRequest = onRankingRequested,
-                    onBackRequested = onBackRequested
-                )
-            }
+            topBar = { TopBar(onBackRequested = onBackRequested) }
         ) {    TODO()      }
     }
 }
-
+/*
 @Composable
 fun TopBar(onAboutRequest: (() -> Unit)?, onRankingRequest: (() -> Unit)?, onBackRequested: (() -> Unit)?) {
     //TODO: TopBar with dropdown
 }
-
+*/
 @Composable
 fun MatchMaking(onClick: () -> Unit) {
     // TODO: MatchMaking Screen
