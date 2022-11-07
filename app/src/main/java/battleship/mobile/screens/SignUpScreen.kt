@@ -12,6 +12,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import battleship.mobile.screens.utils.AppDefaultButton
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
@@ -54,16 +55,7 @@ fun SignUpScreen(
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                 )
-                Button(
-                    onClick = { onSubmit() },
-                    shape = RoundedCornerShape(50.dp),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 20.dp,
-                        bottom = 12.dp
-                    )
-                ) { Text("Sign Up") }
+                AppDefaultButton(onClick = onSubmit, text = SIGN_UP_TEXT)
             }
         }
     }

@@ -13,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import battleship.mobile.TAG
+import battleship.mobile.screens.utils.AppDefaultButton
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
-private val borderSize = 2.dp
-private val shapeSize = 20.dp
+const val SIGN_IN_TEXT = "Sign in"
+const val SIGN_UP_TEXT = "Sign up"
 
 @Composable
 fun SignScreen (onSignUpRequested: (() -> Unit), onSignInRequested: () -> Unit){
@@ -27,21 +28,8 @@ fun SignScreen (onSignUpRequested: (() -> Unit), onSignInRequested: () -> Unit){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-                Button(
-                    onClick = { onSignUpRequested() },
-                    border = BorderStroke(borderSize, MaterialTheme.colors.secondary),
-                    shape = RoundedCornerShape(shapeSize)
-                ) {
-                    Text(text = "Sign Up")
-                }
-
-                Button(
-                    onClick = { onSignInRequested() },
-                    border = BorderStroke(borderSize, MaterialTheme.colors.secondary),
-                    shape = RoundedCornerShape(shapeSize)
-                ) {
-                    Text(text = "Sign In")
-                }
+                AppDefaultButton(onClick = onSignUpRequested, text = SIGN_UP_TEXT)
+                AppDefaultButton(onClick = onSignInRequested, text = SIGN_IN_TEXT)
             }
         }
     }

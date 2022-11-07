@@ -11,7 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import battleship.mobile.screens.utils.AppDefaultButton
 import battleship.mobile.ui.theme.BattleshipmobileTheme
+
+private const val START_TEXT = "Start Game"
+private const val INFO_TEXT = "Info"
+private const val RANKING_TEXT = "Ranking"
+private const val LOGOUT_TEXT = "Logout"
 
 @Preview(showBackground = true)
 @Composable
@@ -38,41 +44,14 @@ fun HomeScreen(
                     style = MaterialTheme.typography.h4,
                     textAlign = TextAlign.Center
                 )
-                Button(
-                    onClick = { onMMRequest() },
-                    shape = RoundedCornerShape(50.dp),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 20.dp,
-                        bottom = 12.dp
-                    )
-                ) { Text("Start Game") }
-                Button(
-                    onClick = { onRankingRequested() },
-                    shape = RoundedCornerShape(50.dp),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 20.dp,
-                        bottom = 12.dp
-                    )
-                ) { Text("Ranking") }
-                Button(
-                    onClick = { onLogoutRequested() },
-                    shape = RoundedCornerShape(50.dp),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 20.dp,
-                        bottom = 12.dp
-                    )
-                ) { Text("Logout") }
+                AppDefaultButton(onClick = onMMRequest, text = START_TEXT)
+                AppDefaultButton(onClick = onRankingRequested, text = RANKING_TEXT)
+                AppDefaultButton(onClick = onLogoutRequested, text = LOGOUT_TEXT)
                 TextButton(
                     onClick = { onAboutRequest() },
                 ) {
                     Icon(Icons.Default.Info, contentDescription = "Localized description")
-                    Text("Info")
+                    Text(INFO_TEXT)
                 }
             }
 
