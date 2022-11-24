@@ -1,7 +1,12 @@
 package battleship.mobile.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,10 +16,12 @@ import battleship.mobile.data.Info
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
+
 @Composable
 fun AboutScreen(
     appInfo: Info,
     serverInfo: Info? = null,
+    onSendEmailRequested: () -> Unit = { },
     onBackRequested: () -> Unit = { }
 ) {
     BattleshipmobileTheme {
@@ -42,15 +49,18 @@ fun AboutScreen(
                 )
                 Text(
                     text = "Authors: ",
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    // necessario arranjar a info dos autores
-                    text = appInfo.authors.joinToString(","),
+                    text = appInfo.authors.joinToString(separator = "\n") { it.id.toString() + " - " + it.name },
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )
+                TextButton(onClick = onSendEmailRequested) {
+                    Icon(Icons.Default.Email, contentDescription = "Localized description")
+                    Text("Contact")
+                }
             }
         }
     }
