@@ -1,6 +1,5 @@
 package battleship.mobile.activities
 
-import RankingActivity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
