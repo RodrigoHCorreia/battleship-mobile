@@ -1,6 +1,7 @@
 package battleship.mobile.info.domain
 
 data class AppAuthor(
+    val id: Int,
     val name : String,
     val email : String
 )

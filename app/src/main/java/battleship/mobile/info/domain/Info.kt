@@ -5,7 +5,6 @@ import kotlinx.coroutines.delay
 interface Info {
 
     suspend fun getServerInformation() : ServerInfo
-    suspend fun getApplicationInformation() : AppInfo
 
 }
 
@@ -20,15 +19,5 @@ class FakeInfo : Info {
         )
     }
 
-    override suspend fun getApplicationInformation(): AppInfo {
-        return AppInfo(
-            "FAKE-APPv2",
-            listOf(
-                AppAuthor(
-                    "Adolfo", "google@google.com"
-                )
-            )
-        )
-    }
 }
 

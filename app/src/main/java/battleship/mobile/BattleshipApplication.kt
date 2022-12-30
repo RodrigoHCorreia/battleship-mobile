@@ -3,6 +3,8 @@ package battleship.mobile
 import android.app.Application
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
+import battleship.mobile.info.domain.AppAuthor
+import battleship.mobile.info.domain.AppInfo
 import battleship.mobile.info.domain.FakeInfo
 import battleship.mobile.info.domain.Info
 import battleship.mobile.main.lobby.domain.FakeLobbyService
@@ -18,6 +20,15 @@ import okhttp3.OkHttpClient
 const val TAG = "BattleShipApplication"
 
 const val BASE_URL = "adolfomorgado.com:8080"
+
+val appInfo = AppInfo(
+    "BattleShip App v0.1",
+    listOf(
+        AppAuthor(48281, "Adolfo Morgado", "a48281@alunos.isel.pt"),
+        AppAuthor(46587, "Gonçalo Silva", "a46587@alunos.isel.pt"),
+        AppAuthor(48355, "Rodrigo Correia", "a48355@alunos.isel.pt")
+    )
+)
 
 class BattleshipApplication : DependencyContainer, Application()
 {
