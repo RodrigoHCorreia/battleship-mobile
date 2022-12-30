@@ -1,40 +1,78 @@
 package battleship.mobile
 
 import android.app.Application
-import battleship.mobile.data.Rank
-import battleship.mobile.services.RankingService
-import kotlinx.coroutines.delay
+import battleship.mobile.game.domain.Board
+import battleship.mobile.game.domain.Game
+import battleship.mobile.info.domain.FakeInfo
+import battleship.mobile.info.domain.Info
+import battleship.mobile.main.lobby.domain.FakeLobbyService
+import battleship.mobile.main.lobby.domain.Lobby
+import battleship.mobile.main.social.domain.Social
+import battleship.mobile.main.social.domain.User
+import battleship.mobile.setup.domain.Setup
+import battleship.mobile.setup.domain.SetupRepository
+import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
+import okhttp3.OkHttpClient
 
 const val TAG = "BattleShipApplication"
 
-class BattleshipApplication : DependenciesContainer, Application() {
-    // TODO: Exchange for the real implementation
-    override val serverService: ServerInfoService
-        get() = FakeServerInfoService()
+const val BASE_URL = "adolfomorgado.com:8080"
 
-    override val rankingService: RankingService
-        get() = FakeRankingService()
+class BattleshipApplication : DependencyContainer, Application()
+{
+    override val jsonFormatter : Gson
+        get() = Gson()
+
+    override val httpClient : OkHttpClient
+        get() = OkHttpClient()
+
+    override val info : Info
+        get() = FakeInfo()
+    override val game: Game
+        get() = FakeGame()
+
+    override val lobby : Lobby
+        get() = FakeLobbyService()
+
+    override val social: Social
+        get() = FakeSocial()
+
+    override val setupRepo: SetupRepository
+        get() = EmptySetupRepository()
+
 }
 
-interface DependenciesContainer {
-    val serverService: ServerInfoService
-    val rankingService: RankingService
+class FakeGame : Game
+{
+    override fun getInfo(): Flow<String> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getBoard(): Flow<Board> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getEnemyBoard(): Flow<Board?> {
+        TODO("Not yet implemented")
+    }
+
 }
 
-@Suppress("unused")
-private class FakeRankingService : RankingService {
-    private val aRank = Rank(
-        user = "Ben Dover",
-        elo = 80
-    )
-
-    override suspend fun fetchUserRank(username: String, mode: RankingService.Mode): Rank {
-        delay(3000)
-        return aRank
+class FakeSocial : Social {
+    override suspend fun searchUserByName(name: String): List<User> {
+        return emptyList()
     }
 
-    override suspend fun fetchRanking(mode: RankingService.Mode): List<Rank> {
-        delay(3000)
-        return buildList { repeat(20) { add(aRank) } }
+    override suspend fun getRanking(page: Int): List<User> {
+        return emptyList()
     }
+
+}
+
+class EmptySetupRepository : SetupRepository {
+    override var setups: List<Setup>
+        get() = emptyList()
+        set(value) {}
+
 }
