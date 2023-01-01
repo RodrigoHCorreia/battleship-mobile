@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import battleship.mobile.info.domain.AppAuthor
 import battleship.mobile.info.domain.AppInfo
+import battleship.mobile.info.domain.ServerAuthor
+import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
@@ -22,6 +24,7 @@ import battleship.mobile.ui.theme.BattleshipmobileTheme
 @Composable
 fun InfoScreen(
     appInfo: AppInfo,
+    serverInfo: ServerInfo,
     onSendEmailRequested: () -> Unit = { },
     onBackRequested : () -> Unit
 ) {
@@ -52,7 +55,17 @@ fun InfoScreen(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "Authors: ",
+                    text = "API",
+                    style = MaterialTheme.typography.h5,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = serverInfo.version,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = "Authors",
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center
                 )
@@ -83,6 +96,18 @@ fun InfoScreenPreview() {
                     "johndoe@google.com"
                 ),
                 AppAuthor(
+                    420,
+                    "Hugh Jass",
+                    "HughJass@alunos.icel.pt"
+                )
+            )),
+            serverInfo = ServerInfo("x.y.z", listOf(
+                ServerAuthor(
+                    123,
+                    "John Doe",
+                    "johndoe@google.com"
+                ),
+                ServerAuthor(
                     420,
                     "Hugh Jass",
                     "HughJass@alunos.icel.pt"

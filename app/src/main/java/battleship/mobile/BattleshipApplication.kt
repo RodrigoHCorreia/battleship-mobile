@@ -3,10 +3,7 @@ package battleship.mobile
 import android.app.Application
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
-import battleship.mobile.info.domain.AppAuthor
-import battleship.mobile.info.domain.AppInfo
-import battleship.mobile.info.domain.FakeInfo
-import battleship.mobile.info.domain.Info
+import battleship.mobile.info.domain.*
 import battleship.mobile.main.lobby.domain.FakeLobbyService
 import battleship.mobile.main.lobby.domain.Lobby
 import battleship.mobile.main.social.domain.Social
@@ -14,6 +11,7 @@ import battleship.mobile.main.social.domain.User
 import battleship.mobile.setup.domain.Setup
 import battleship.mobile.setup.domain.SetupRepository
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 
@@ -30,8 +28,8 @@ val appInfo = AppInfo(
     )
 )
 
-class BattleshipApplication : DependencyContainer, Application()
-{
+class BattleshipApplication : DependencyContainer, Application() {
+
     override val jsonFormatter : Gson
         get() = Gson()
 
@@ -40,6 +38,7 @@ class BattleshipApplication : DependencyContainer, Application()
 
     override val info : Info
         get() = FakeInfo()
+
     override val game: Game
         get() = FakeGame()
 
@@ -54,8 +53,8 @@ class BattleshipApplication : DependencyContainer, Application()
 
 }
 
-class FakeGame : Game
-{
+class FakeGame : Game {
+
     override fun getInfo(): Flow<String> {
         TODO("Not yet implemented")
     }
@@ -71,6 +70,7 @@ class FakeGame : Game
 }
 
 class FakeSocial : Social {
+
     override suspend fun searchUserByName(name: String): List<User> {
         return emptyList()
     }
@@ -81,7 +81,26 @@ class FakeSocial : Social {
 
 }
 
+class FakeInfo : Info {
+
+    override suspend fun getServerInformation(): ServerInfo {
+        delay(1000)
+        return ServerInfo(
+            "0.0.1-FAKE",
+            listOf(
+                ServerAuthor(1, "adolfo", "adolfmorg@gmail.com")
+            )
+        )
+    }
+
+    override fun getApplicationInformation(): AppInfo {
+        return appInfo
+    }
+
+}
+
 class EmptySetupRepository : SetupRepository {
+
     override var setups: List<Setup>
         get() = emptyList()
         set(value) {}

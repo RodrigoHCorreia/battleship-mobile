@@ -1,22 +1,23 @@
 package battleship.mobile.info.domain
 
-import kotlinx.coroutines.delay
+import battleship.mobile.appInfo
 
 interface Info {
 
     suspend fun getServerInformation() : ServerInfo
 
+    fun getApplicationInformation(): AppInfo
+
 }
 
-class FakeInfo : Info {
+class RealInfo : Info {
+
     override suspend fun getServerInformation(): ServerInfo {
-        delay(1000)
-        return ServerInfo(
-            "0.0.1-FAKE",
-            listOf(
-                ServerAuthor(1, "adolfo", "adolfmorg@gmail.com")
-            )
-        )
+        TODO("Not yet implemented")
+    }
+
+    override fun getApplicationInformation(): AppInfo {
+        return appInfo
     }
 
 }
