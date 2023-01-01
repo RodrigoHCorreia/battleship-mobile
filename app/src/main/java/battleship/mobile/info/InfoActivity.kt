@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import battleship.mobile.FakeInfo
 import battleship.mobile.R
 import battleship.mobile.TAG
-import battleship.mobile.appInfo
+import battleship.mobile.info.domain.RealInfo
 import battleship.mobile.info.ui.InfoScreen
 import battleship.mobile.info.ui.InfoViewModel
 import battleship.mobile.ui.theme.BattleshipmobileTheme
@@ -21,9 +22,11 @@ import battleship.mobile.utils.viewModelInit
 
 class InfoActivity : ComponentActivity() {
 
+    val info = FakeInfo()
+
     private val viewModels by viewModels<InfoViewModel> {
         viewModelInit {
-            InfoViewModel()
+            InfoViewModel(info)
         }
     }
 
@@ -43,7 +46,8 @@ class InfoActivity : ComponentActivity() {
         setContent {
             BattleshipmobileTheme {
                 InfoScreen(
-                    appInfo = appInfo,
+                    appInfo = info.getApplicationInformation(),
+                    //serverInfo = info.getServerInformation(),
                     onSendEmailRequested = { openSendEmail() },
                     onBackRequested = { finish() }
                 )
@@ -55,7 +59,11 @@ class InfoActivity : ComponentActivity() {
         try {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, appInfo.authors.map { it.email }.toTypedArray())
+                putExtra(Intent.EXTRA_EMAIL, info
+                    .getApplicationInformation()
+                    .authors
+                    .map { it.email }
+                    .toTypedArray())
             }
 
             startActivity(intent)
