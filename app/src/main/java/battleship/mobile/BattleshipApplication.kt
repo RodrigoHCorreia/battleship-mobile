@@ -84,7 +84,7 @@ class FakeSocial : Social {
 class FakeInfo : Info {
 
     override suspend fun getServerInformation(): ServerInfo {
-        delay(1000)
+        delay(2000)
         return ServerInfo(
             "0.0.1-FAKE",
             listOf(

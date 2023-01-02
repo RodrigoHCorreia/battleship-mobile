@@ -13,9 +13,11 @@ import androidx.activity.viewModels
 import battleship.mobile.FakeInfo
 import battleship.mobile.R
 import battleship.mobile.TAG
-import battleship.mobile.info.domain.RealInfo
+import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.info.ui.InfoScreen
 import battleship.mobile.info.ui.InfoViewModel
+import battleship.mobile.info.ui.ServerInfoState
+import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 import battleship.mobile.utils.viewModelInit
 
@@ -24,7 +26,7 @@ class InfoActivity : ComponentActivity() {
 
     val info = FakeInfo()
 
-    private val viewModels by viewModels<InfoViewModel> {
+    private val viewModel by viewModels<InfoViewModel> {
         viewModelInit {
             InfoViewModel(info)
         }
@@ -44,10 +46,19 @@ class InfoActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            if (viewModel.info == null)
+                viewModel.fetchInfo()
+
+            val loadingState =
+                if (viewModel.isLoading) RefreshingState.Refreshing
+                else RefreshingState.Idle
+
+            val serverInfo = viewModel.info?.getOrNull() ?: ServerInfo("x.y.z", emptyList())
+
             BattleshipmobileTheme {
                 InfoScreen(
                     appInfo = info.getApplicationInformation(),
-                    //serverInfo = info.getServerInformation(),
+                    state = ServerInfoState(serverInfo, loadingState),
                     onSendEmailRequested = { openSendEmail() },
                     onBackRequested = { finish() }
                 )

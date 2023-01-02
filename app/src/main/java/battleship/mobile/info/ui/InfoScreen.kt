@@ -1,30 +1,33 @@
 package battleship.mobile.info.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import battleship.mobile.info.domain.AppAuthor
 import battleship.mobile.info.domain.AppInfo
-import battleship.mobile.info.domain.ServerAuthor
 import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.ui.NavigationHandlers
+import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
+
+data class ServerInfoState(
+    val serverInfo: ServerInfo = ServerInfo("x.y.z", emptyList()),
+    val isLoading: RefreshingState = RefreshingState.Idle
+)
 
 @Composable
 fun InfoScreen(
     appInfo: AppInfo,
-    serverInfo: ServerInfo,
+    state: ServerInfoState = ServerInfoState(),
     onSendEmailRequested: () -> Unit = { },
     onBackRequested : () -> Unit
 ) {
@@ -59,11 +62,20 @@ fun InfoScreen(
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center
                 )
-                Text(
-                    text = serverInfo.version,
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center
-                )
+                if (state.isLoading == RefreshingState.Refreshing) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        color = Color.Yellow,
+                        strokeWidth = 3.dp
+                    )
+                }
+                else {
+                    Text(
+                        text = "version: " + state.serverInfo.version,
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center
+                    )
+                }
                 Text(
                     text = "Authors",
                     style = MaterialTheme.typography.h5,
@@ -96,18 +108,6 @@ fun InfoScreenPreview() {
                     "johndoe@google.com"
                 ),
                 AppAuthor(
-                    420,
-                    "Hugh Jass",
-                    "HughJass@alunos.icel.pt"
-                )
-            )),
-            serverInfo = ServerInfo("x.y.z", listOf(
-                ServerAuthor(
-                    123,
-                    "John Doe",
-                    "johndoe@google.com"
-                ),
-                ServerAuthor(
                     420,
                     "Hugh Jass",
                     "HughJass@alunos.icel.pt"

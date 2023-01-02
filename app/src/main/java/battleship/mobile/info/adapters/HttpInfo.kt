@@ -1,5 +1,6 @@
 package battleship.mobile.info.adapters
 
+import battleship.mobile.info.domain.AppInfo
 import battleship.mobile.info.domain.Info
 import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.utils.hypermedia.SirenMediaType
@@ -28,6 +29,10 @@ class HttpInfo(
         checkNotNull(prop) // switch this out to throw a custom exception
 
         return prop.toServerInfo()
+    }
+
+    override fun getApplicationInformation(): AppInfo {
+        TODO("Not yet implemented")
     }
 
     private fun <T> handleResponse(response: Response, type: Type): T {
