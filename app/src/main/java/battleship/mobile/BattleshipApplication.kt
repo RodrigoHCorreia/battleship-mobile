@@ -4,10 +4,10 @@ import android.app.Application
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
 import battleship.mobile.info.domain.*
-import battleship.mobile.main.lobby.domain.FakeLobbyService
-import battleship.mobile.main.lobby.domain.Lobby
-import battleship.mobile.main.social.domain.Social
-import battleship.mobile.main.social.domain.User
+import battleship.mobile.lobby.domain.FakeLobbyService
+import battleship.mobile.lobby.domain.Lobby
+import battleship.mobile.social.domain.Social
+import battleship.mobile.social.domain.User
 import battleship.mobile.setup.domain.Setup
 import battleship.mobile.setup.domain.SetupRepository
 import com.google.gson.Gson
@@ -71,12 +71,20 @@ class FakeGame : Game {
 
 class FakeSocial : Social {
 
+    private val aUser = User(
+        id = 1,
+        username = "gonçolfo",
+        playCount = 2,
+        elo = 5
+    )
+
     override suspend fun searchUserByName(name: String): List<User> {
         return emptyList()
     }
 
     override suspend fun getRanking(page: Int): List<User> {
-        return emptyList()
+        delay(3000)
+        return buildList { repeat(10) { add(aUser) } }
     }
 
 }

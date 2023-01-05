@@ -1,4 +1,4 @@
-package battleship.mobile.main.lobby.ui
+package battleship.mobile.lobby.ui
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package battleship.mobile.main.lobby.domain
+package battleship.mobile.lobby.domain
 
 
 interface Lobby {

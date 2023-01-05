@@ -1,18 +1,15 @@
-package battleship.mobile.main.lobby.ui
+package battleship.mobile.lobby.ui
 
-import android.widget.Space
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import battleship.mobile.ui.AppButton
 import battleship.mobile.ui.theme.BattleshipmobileTheme
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun CredentialInputView(

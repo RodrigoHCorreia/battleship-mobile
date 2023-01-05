@@ -1,4 +1,4 @@
-package battleship.mobile.main.social.domain
+package battleship.mobile.social.domain
 
 /**
  * Used to represent a user in the battleship application

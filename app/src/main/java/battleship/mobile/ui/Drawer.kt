@@ -1,4 +1,4 @@
-package battleship.mobile.main.ui
+package battleship.mobile.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.dp
 
 const val DRAWER_ICON_TEXT_SPACE = 16
 
-typealias Callback = () -> Unit
+typealias DrawerCallback = () -> Unit
 
 @Composable
 fun DrawerItem(
     icon : ImageVector,
     title : String,
     description : String,
-    onClick : Callback
+    onClick : DrawerCallback
 ) {
     val m = Modifier
         .clickable(onClick = onClick)
@@ -41,9 +41,9 @@ fun DrawerItem(
 
 @Composable
 fun DrawerContent(
-    onLobbyClick : Callback,
-    onSocialClick : Callback,
-    onInfoClick : Callback
+    onLobbyClick : DrawerCallback,
+    onSocialClick : DrawerCallback,
+    onInfoClick : DrawerCallback
 ) {
     Text("Battleship Game")
     Divider()
