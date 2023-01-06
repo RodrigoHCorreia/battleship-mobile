@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 
@@ -25,6 +26,10 @@ data class NavigationHandlers(
     }
 }
 
+// Test tags for the TopBar navigation elements
+const val OpenDrawerTag = "OpenDrawer"
+const val NavigateBackTag = "NavigateBack"
+
 @Composable
 fun TopBar(
     navigation : NavigationHandlers
@@ -35,12 +40,18 @@ fun TopBar(
         modifier = modifier,
         navigationIcon = {
             navigation.onDrawerRequested?.let {
-                IconButton(onClick = it) {
+                IconButton(
+                    onClick = it,
+                    modifier = Modifier.testTag(OpenDrawerTag)
+                ) {
                     Icon(Icons.Default.List, "Open Drawer")
                 }
             }
             navigation.onBackRequested?.let {
-                IconButton(onClick = it) {
+                IconButton(
+                    onClick = it,
+                    modifier = Modifier.testTag(NavigateBackTag)
+                ) {
                     Icon(Icons.Default.ArrowBack, "Go back")
                 }
             }

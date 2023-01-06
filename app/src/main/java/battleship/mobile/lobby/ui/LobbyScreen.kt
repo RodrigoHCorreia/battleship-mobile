@@ -5,6 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,6 +17,8 @@ import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
 import kotlinx.coroutines.launch
+
+const val LobbyScreenTag = "LobbyScreen"
 
 @Composable
 fun LobbyScreen(
@@ -34,6 +38,9 @@ fun LobbyScreen(
 
     BattleshipmobileTheme {
         Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(LobbyScreenTag),
             scaffoldState = scaffoldState,
             topBar = { TopBar(navHandlers) },
             drawerContent = {

@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,8 @@ import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
+
+const val InfoScreenTag = "InfoScreen"
 
 data class ServerInfoState(
     val serverInfo: ServerInfo = ServerInfo("x.y.z", emptyList()),
@@ -36,7 +39,9 @@ fun InfoScreen(
 
     BattleshipmobileTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(InfoScreenTag),
             topBar = { TopBar(navigation = navHandler) },
         ) { innerPadding ->
             Column(

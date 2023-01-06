@@ -13,11 +13,16 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 const val DRAWER_ICON_TEXT_SPACE = 16
+
+const val GameButtonTag = "Game"
+const val SocialButtonTag = "Social"
+const val InfoButtonTag = "Info"
 
 typealias DrawerCallback = () -> Unit
 
@@ -26,10 +31,12 @@ fun DrawerItem(
     icon : ImageVector,
     title : String,
     description : String,
-    onClick : DrawerCallback
+    onClick : DrawerCallback,
+    tag : String
 ) {
     val m = Modifier
         .clickable(onClick = onClick)
+        .testTag(tag)
     Row(modifier = m) {
         Icon(
             imageVector = icon,
@@ -65,19 +72,22 @@ fun DrawerContent(
             icon = Icons.Default.PlayArrow,
             title = "Game",
             description = "Get Game Lobby",
-            onClick = onLobbyClick
+            onClick = onLobbyClick,
+            tag = GameButtonTag
         )
         DrawerItem(
             icon = Icons.Default.Star,
             title = "Social",
             description = "Show Social Screen",
-            onClick = onSocialClick
+            onClick = onSocialClick,
+            tag = SocialButtonTag
         )
         DrawerItem(
             icon = Icons.Default.Info,
             title = "Info",
             description = "Show application and server Info",
-            onClick = onInfoClick
+            onClick = onInfoClick,
+            tag = InfoButtonTag
         )
     }
 }

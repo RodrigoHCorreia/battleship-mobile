@@ -9,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,6 +19,8 @@ import battleship.mobile.ui.RefreshFab
 import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipmobileTheme
+
+const val SocialScreenTag = "SocialScreen"
 
 data class SocialScreenState(
     val ranking: List<User> = emptyList(),
@@ -36,7 +39,9 @@ fun SocialScreen(
 
     BattleshipmobileTheme() {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(SocialScreenTag),
             topBar = { TopBar(navigation = navHandler) },
             floatingActionButton = {
                 RefreshFab(     // maybe replace button for pull to refresh?
