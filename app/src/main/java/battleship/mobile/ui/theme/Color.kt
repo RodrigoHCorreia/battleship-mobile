@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 // Light Palette
 val black = Color(0xFF000000)
 val white = Color(0xFFFFFFFF)
-val red300 = Color(0xFFE75989)
+val red300 = Color(0xFFE57373)
 val yellow300 = Color(0xFFFFDA83)
 val green300 =  Color(0xFFB6D4CC)
-val blue500 = Color(0xFF659FB2)
+val blue200 = Color(0xFF80DEEA)
 val blue700 = Color(0xFF073B4C)
 
 

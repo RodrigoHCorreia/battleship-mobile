@@ -5,21 +5,21 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val DarkColorPalette = darkColors(
-    primary = green300,
-    primaryVariant = blue500,
-    secondary = white,
+    primary = blue200,
+    primaryVariant = blue700,
+    secondary = black,
     background = blue700
 )
 
 private val LightColorPalette = lightColors(
-    primary = yellow300,
-    primaryVariant = red300,
+    primary = blue700,
+    primaryVariant = blue200,
     secondary = black,
-    background = red300
+    background = blue200
 
     /* Other default colors to override
     background = Color.White,
@@ -47,5 +47,11 @@ fun BattleshipmobileTheme(
         typography = Typography,
         shapes = Shapes,
         content = content
+    )
+
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(
+        color = LightColorPalette.primary
     )
 }

@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,22 +49,25 @@ fun InfoScreen(
                 Text(
                     text = "Battleships",
                     style = MaterialTheme.typography.h4,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
                 )
                 Text(
                     text = "version: " + appInfo.version,
                     style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
                 )
                 Text(
                     text = "API",
                     style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
                 )
                 if (state.isLoading == RefreshingState.Refreshing) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
-                        color = Color.Yellow,
+                        color = MaterialTheme.colors.primary,
                         strokeWidth = 3.dp
                     )
                 }
@@ -73,18 +75,21 @@ fun InfoScreen(
                     Text(
                         text = "version: " + state.serverInfo.version,
                         style = MaterialTheme.typography.body1,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.primary
                     )
                 }
                 Text(
                     text = "Authors",
                     style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
                 )
                 Text(
                     text = appInfo.authors.joinToString(separator = "\n") { it.id.toString() + " - " + it.name },
                     style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colors.primary
                 )
                 TextButton(onClick = onSendEmailRequested) {
                     Icon(Icons.Default.Email, contentDescription = "Localized description")

@@ -73,7 +73,7 @@ class FakeSocial : Social {
 
     private val aUser = User(
         id = 1,
-        username = "gonçolfo",
+        username = "john_doe",
         playCount = 2,
         elo = 5
     )

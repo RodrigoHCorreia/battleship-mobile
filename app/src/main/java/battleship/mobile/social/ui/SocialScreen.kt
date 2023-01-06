@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FabPosition
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import battleship.mobile.social.domain.User
 import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.RefreshFab
@@ -55,16 +57,20 @@ fun SocialScreen(
                 ) {
                     Text(
                         text = "User",
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Black,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colors.primary
                     )
                     Text(
                         text = "Rank",
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Black,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colors.primary
                     )
                 }
                 LazyColumn(
                     modifier = Modifier.padding(innerPadding),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(state.ranking) { user ->
                         Row(
@@ -72,10 +78,16 @@ fun SocialScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = user.username
+                                text = user.username,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colors.primary
                             )
                             Text(
-                                text = user.elo.toString()
+                                text = user.elo.toString(),
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colors.primary
                             )
                         }
                     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -12,7 +13,9 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 const val DRAWER_ICON_TEXT_SPACE = 16
 
@@ -34,7 +37,9 @@ fun DrawerItem(
         )
         Spacer(Modifier.width(DRAWER_ICON_TEXT_SPACE.dp))
         Text(
-            text = title
+            text = title,
+            fontWeight = FontWeight.Black,
+            fontSize = 18.sp
         )
     }
 }
@@ -45,9 +50,17 @@ fun DrawerContent(
     onSocialClick : DrawerCallback,
     onInfoClick : DrawerCallback
 ) {
-    Text("Battleship Game")
+    Text(
+        text = "Battleship Game",
+        modifier = Modifier.padding(16.dp),
+        style = MaterialTheme.typography.h5,
+        fontWeight = FontWeight.Black
+    )
     Divider()
-    Column {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         DrawerItem(
             icon = Icons.Default.PlayArrow,
             title = "Game",
