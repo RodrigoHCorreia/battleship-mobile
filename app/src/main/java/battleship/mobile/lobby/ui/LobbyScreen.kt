@@ -34,6 +34,7 @@ fun LobbyScreen(
     state : LobbyScreenState = LobbyScreenState(),
     onDrawerSocialRequest : () -> Unit,
     onDrawerInfoRequest : () -> Unit,
+    onDrawerLogoutRequest : () -> Unit,
     onMatchRequested : () -> Unit,
     onHostRequested : () -> Unit,
 ) {
@@ -57,7 +58,8 @@ fun LobbyScreen(
                 DrawerContent(
                     onLobbyClick = { scope.launch { scaffoldState.drawerState.close() } },
                     onSocialClick = onDrawerSocialRequest,
-                    onInfoClick = onDrawerInfoRequest
+                    onInfoClick = onDrawerInfoRequest,
+                    onLogoutClick = onDrawerLogoutRequest
                 )
             },
             drawerBackgroundColor = MaterialTheme.colors.background
@@ -82,8 +84,8 @@ fun LobbyScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
-                    AppButton(text = "Match", onMatchRequested)
-                    AppButton(text = "Host", onHostRequested)
+                    AppButton(text = "Match", onClick = onMatchRequested)
+                    //AppButton(text = "Host", onClick = onHostRequested)
                 }
 
                 Text(
@@ -170,6 +172,7 @@ fun LobbyScreenPreview() {
             ), RefreshingState.Idle),
             onDrawerSocialRequest = {},
             onDrawerInfoRequest = {},
+            onDrawerLogoutRequest = {},
             onMatchRequested = {},
             onHostRequested = {}
         )
