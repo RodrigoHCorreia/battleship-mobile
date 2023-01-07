@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import battleship.mobile.ui.AppButton
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 @Composable
 fun CredentialInputView(
@@ -81,7 +81,7 @@ fun ScreenChooserView(
 @Preview
 @Composable
 fun ScreenChooserPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         ScreenChooserView({}, {})
     }
 }

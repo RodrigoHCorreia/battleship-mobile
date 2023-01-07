@@ -4,7 +4,7 @@ import android.app.Application
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
 import battleship.mobile.info.domain.*
-import battleship.mobile.lobby.domain.FakeLobbyService
+import battleship.mobile.lobby.domain.ActiveGame
 import battleship.mobile.lobby.domain.Lobby
 import battleship.mobile.social.domain.Social
 import battleship.mobile.social.domain.User
@@ -43,7 +43,7 @@ class BattleshipApplication : DependencyContainer, Application() {
         get() = FakeGame()
 
     override val lobby : Lobby
-        get() = FakeLobbyService()
+        get() = FakeLobby()
 
     override val social: Social
         get() = FakeSocial()
@@ -65,6 +65,19 @@ class FakeGame : Game {
 
     override fun getEnemyBoard(): Flow<Board?> {
         TODO("Not yet implemented")
+    }
+
+}
+
+class FakeLobby : Lobby {
+
+    override suspend fun getActiveGames(): List<ActiveGame> {
+        delay(2000)
+        return listOf(
+            ActiveGame(1, "goncaloaps"),
+            ActiveGame(2, "admorgado"),
+            ActiveGame(3, "rodrigohcorreia"),
+        )
     }
 
 }

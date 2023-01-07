@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">battleship-mobile</string>
-    <string name="activity_info_no_suitable_app">Could not find a suitable application</string>
+    <string name="info_no_suitable_app">Could not find a suitable application</string>
+    <string name="app_title">Battleship</string>
+    <string name="info_server_info_display">Server Info: </string>
+    <string name="info_app_info_display">App Info: </string>
+    <string name="info_authors_display">Authors: </string>
+    <string name="info_version_display">Version: </string>
+    <string name="info_send_email">Contact</string>
+
 </resources>

@@ -14,7 +14,7 @@
         tools:targetApi="31"
         android:name=".BattleshipApplication">
         <activity
-            android:name=".lobby.LobbyActivity"
+            android:name=".login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.Battleshipmobile">
@@ -33,6 +33,10 @@
             />
         <activity
             android:name=".social.SocialActivity"
+            android:exported="false"
+            />
+        <activity
+            android:name=".lobby.LobbyActivity"
             android:exported="false"
             />
         <activity

@@ -11,7 +11,7 @@ import battleship.mobile.social.domain.SocialViewModel
 import battleship.mobile.social.ui.SocialScreen
 import battleship.mobile.social.ui.SocialScreenState
 import battleship.mobile.ui.RefreshingState
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 import battleship.mobile.utils.viewModelInit
 
 class SocialActivity : ComponentActivity() {
@@ -46,7 +46,7 @@ class SocialActivity : ComponentActivity() {
 
             val ranking = viewModel.ranking?.getOrNull() ?: emptyList()
 
-            BattleshipmobileTheme {
+            BattleshipMobileTheme {
                 SocialScreen(
                     state = SocialScreenState(ranking, loadingState),
                     onUpdateRequest = { viewModel.getRanking(1) },

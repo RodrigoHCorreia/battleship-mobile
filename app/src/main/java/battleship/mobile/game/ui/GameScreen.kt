@@ -15,7 +15,7 @@ import battleship.mobile.game.domain.*
 import battleship.mobile.ui.AppButton
 import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.TopBar
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 @Composable
 fun LoadingScreen() {
@@ -89,7 +89,7 @@ fun GameScreen(
     onShootRequested : (Coordinates) -> Unit = {}
 ) {
     val navHandler = NavigationHandlers(onBackRequested = onBackRequested)
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         Scaffold(
             topBar = { TopBar(navigation = navHandler) }
         ) {
@@ -114,7 +114,7 @@ fun GameScreen(
 @Preview
 @Composable
 fun GameScreenWaitingPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         GameScreen(
             game = GameWaiting(
                 id = 100,
@@ -127,7 +127,7 @@ fun GameScreenWaitingPreview() {
 @Preview
 @Composable
 fun GameScreenPlanningPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         GameScreen(
             game = GamePlanning(
                 id = 52,
@@ -153,5 +153,6 @@ fun GameScreenFightingPreview() {
         )
     }
 }
+
 
 

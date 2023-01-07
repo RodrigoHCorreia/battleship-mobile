@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 typealias Callback = () -> Unit
 
@@ -78,14 +78,14 @@ fun TopBar(
 @Preview
 @Composable
 private fun TopBarPreviewBack() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         TopBar(NavigationHandlers({}))
     }
 }
 @Preview
 @Composable
 private fun TopBarPreviewDrawer() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         TopBar(NavigationHandlers(null, {}))
     }
 }
