@@ -1,5 +1,7 @@
 package battleship.mobile.lobby
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +28,15 @@ class LobbyActivity : ComponentActivity() {
         }
     }
 
+    companion object {
+        fun navigate(origin: Activity) {
+            with(origin) {
+                val intent = Intent(this, LobbyActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,6 +58,9 @@ class LobbyActivity : ComponentActivity() {
                     },
                     onDrawerInfoRequest = {
                         InfoActivity.navigate(this)
+                    },
+                    onDrawerLogoutRequest = {
+                        finish()
                     },
                     onMatchRequested = {
 

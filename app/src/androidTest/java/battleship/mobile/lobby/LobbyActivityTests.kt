@@ -6,8 +6,10 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import battleship.mobile.info.ui.InfoScreenTag
 import battleship.mobile.lobby.ui.LobbyScreenTag
+import battleship.mobile.login.ui.LoginScreenTag
 import battleship.mobile.social.ui.SocialScreenTag
 import battleship.mobile.ui.InfoButtonTag
+import battleship.mobile.ui.LogoutButtonTag
 import battleship.mobile.ui.OpenDrawerTag
 import battleship.mobile.ui.SocialButtonTag
 import org.junit.Rule
@@ -62,6 +64,20 @@ class LobbyActivityTests {
 
         // Assert
         testRule.onNodeWithTag(InfoScreenTag).assertExists()
+    }
+
+    @Test
+    fun pressing_logout_displays_login_activity() {
+
+        // Act
+        testRule.onNodeWithTag(LoginScreenTag).assertDoesNotExist()
+        testRule.onNodeWithTag(OpenDrawerTag).performClick()
+        testRule.waitForIdle()
+        testRule.onNodeWithTag(LogoutButtonTag).performClick()
+        testRule.waitForIdle()
+
+        // Assert
+        testRule.onNodeWithTag(LoginScreenTag).assertExists()
     }
 
 }
