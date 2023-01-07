@@ -10,21 +10,18 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import battleship.mobile.FakeInfo
+import battleship.mobile.DependencyContainer
 import battleship.mobile.R
 import battleship.mobile.TAG
-import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.info.ui.InfoScreen
 import battleship.mobile.info.ui.InfoViewModel
-import battleship.mobile.info.ui.ServerInfoState
-import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.theme.BattleshipMobileTheme
 import battleship.mobile.utils.viewModelInit
 
 
 class InfoActivity : ComponentActivity() {
 
-    val info = FakeInfo()
+    private val info by lazy { (application as DependencyContainer).info }
 
     private val viewModel by viewModels<InfoViewModel> {
         viewModelInit {
@@ -41,24 +38,19 @@ class InfoActivity : ComponentActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.fetchInfo()
+
         setContent {
-            if (viewModel.info == null)
-                viewModel.fetchInfo()
 
-            val loadingState =
-                if (viewModel.isLoading) RefreshingState.Refreshing
-                else RefreshingState.Idle
-
-            val serverInfo = viewModel.info?.getOrNull() ?: ServerInfo("x.y.z", emptyList())
+            val serverInfo = viewModel.info?.getOrNull() //?: TODO("porque é que tas a dar fake")
 
             BattleshipMobileTheme {
                 InfoScreen(
                     appInfo = info.getApplicationInformation(),
-                    state = ServerInfoState(serverInfo, loadingState),
+                    serverInfo = serverInfo,
                     onSendEmailRequested = { openSendEmail() },
                     onBackRequested = { finish() }
                 )
@@ -68,7 +60,7 @@ class InfoActivity : ComponentActivity() {
 
     private fun openSendEmail() {
         try {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
+            val intent = Intent(Intent.ACTION_SENDTO).apply { //TODO: Change this so email is only sent to developer clicked.
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, info
                     .getApplicationInformation()
@@ -84,7 +76,7 @@ class InfoActivity : ComponentActivity() {
             Toast
                 .makeText(
                     this,
-                    R.string.activity_info_no_suitable_app,
+                    R.string.info_no_suitable_app,
                     Toast.LENGTH_LONG
                 )
                 .show()
@@ -92,4 +84,6 @@ class InfoActivity : ComponentActivity() {
     }
 
 }
+
+
 

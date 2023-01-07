@@ -16,9 +16,10 @@ import java.net.URL
 class HttpInfo(
     private val url : URL,
     private val httpClient: OkHttpClient,
-    private val jsonEncoder: Gson
+    private val jsonEncoder: Gson,
+    private val appInfo : AppInfo
 ) : Info {
-    override suspend fun getServerInformation(): ServerInfo {
+    override suspend fun getServerInformation(): ServerInfo { //TODO RECIEVE SERVER INFO
 
         val request = buildRequest(url)
 
@@ -26,13 +27,13 @@ class HttpInfo(
             handleResponse<InfoDto>(it, InfoDtoType.type)
         }
         val prop = infoDto.properties
-        checkNotNull(prop) // switch this out to throw a custom exception
+        checkNotNull(prop) // TODO: switch this out to throw a custom exception
 
         return prop.toServerInfo()
     }
 
     override fun getApplicationInformation(): AppInfo {
-        TODO("Not yet implemented")
+        return appInfo
     }
 
     private fun <T> handleResponse(response: Response, type: Type): T {
