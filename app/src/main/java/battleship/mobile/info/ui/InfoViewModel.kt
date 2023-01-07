@@ -14,9 +14,6 @@ class InfoViewModel (
     private val infoService: Info
 ) : ViewModel() {
 
-    private var _isLoading by mutableStateOf(false)
-    val isLoading: Boolean
-        get() = _isLoading
 
     private var _info by mutableStateOf<Result<ServerInfo>?>(null)
     val info: Result<ServerInfo>?
@@ -24,13 +21,13 @@ class InfoViewModel (
 
     fun fetchInfo() {
         viewModelScope.launch {
-            _isLoading = true
             _info =
                 try {
                     Result.success(infoService.getServerInformation())
                 }
-                catch (e: Exception) { Result.failure(e) }
-            _isLoading = false
+                catch (e: Exception) {
+                    //TODO: I will add my AppException Here later
+                    Result.failure(e) }
         }
     }
 

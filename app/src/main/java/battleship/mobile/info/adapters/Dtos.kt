@@ -9,7 +9,13 @@ data class AuthorDto(
     val name : String,
     val email : String,
     val id : Int,
-)
+){
+    fun toServerAuthor() = ServerAuthor(
+        id = id,
+        name = name,
+        email = email
+    )
+}
 
 data class InfoDtoProperties(
     val version : String,
@@ -22,5 +28,5 @@ val InfoDtoType = SirenEntity.getType<InfoDtoProperties>()
 fun InfoDtoProperties.toServerInfo() =
     ServerInfo(
         version,
-        authors.map { ServerAuthor(it.id, it.name, it.email) }
+        authors.map { it.toServerAuthor() }
     )
