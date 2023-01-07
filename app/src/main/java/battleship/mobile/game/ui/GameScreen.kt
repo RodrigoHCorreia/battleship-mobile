@@ -141,7 +141,7 @@ fun GameScreenPlanningPreview() {
 @Preview
 @Composable
 fun GameScreenFightingPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         GameScreen(
             game = GameFight(
                 id = 100,

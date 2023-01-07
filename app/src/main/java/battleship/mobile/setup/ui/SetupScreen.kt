@@ -26,7 +26,7 @@ fun ShipConfigView(ship : ShipPrototype) {
 @Preview
 @Composable
 fun ShipConfigPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         ShipConfigView(ship = ShipPrototype(
             name = "",
             size = 1,
