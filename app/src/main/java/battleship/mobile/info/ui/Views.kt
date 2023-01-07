@@ -2,7 +2,7 @@ package battleship.mobile.info.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 @Composable
 fun ServerAuthorView() {
@@ -27,7 +27,7 @@ fun AppInfoView() {
 @Preview(showBackground = true)
 @Composable
 fun ServerAuthorPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         ServerAuthorView()
     }
 }
@@ -35,7 +35,7 @@ fun ServerAuthorPreview() {
 @Preview(showBackground = true)
 @Composable
 fun AppAuthorPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         AppInfoAuthorView()
     }
 }

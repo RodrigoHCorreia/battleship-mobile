@@ -18,7 +18,7 @@ import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.RefreshFab
 import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.TopBar
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 const val SocialScreenTag = "SocialScreen"
 
@@ -37,7 +37,7 @@ fun SocialScreen(
         onBackRequested = onBackRequested
     )
 
-    BattleshipmobileTheme() {
+    BattleshipMobileTheme() {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()

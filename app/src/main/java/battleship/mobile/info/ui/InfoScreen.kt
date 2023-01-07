@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,7 +18,7 @@ import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.ui.NavigationHandlers
 import battleship.mobile.ui.RefreshingState
 import battleship.mobile.ui.TopBar
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 const val InfoScreenTag = "InfoScreen"
 
@@ -37,7 +38,7 @@ fun InfoScreen(
         onBackRequested = onBackRequested
     )
 
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
@@ -52,10 +53,11 @@ fun InfoScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "Battleships",
+                    text = "Battleship",
                     style = MaterialTheme.typography.h4,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
+                    fontWeight = FontWeight.Black
                 )
                 Text(
                     text = "version: " + appInfo.version,
@@ -65,9 +67,10 @@ fun InfoScreen(
                 )
                 Text(
                     text = "API",
-                    style = MaterialTheme.typography.h5,
+                    style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
+                    fontWeight = FontWeight.Bold
                 )
                 if (state.isLoading == RefreshingState.Refreshing) {
                     CircularProgressIndicator(
@@ -86,9 +89,10 @@ fun InfoScreen(
                 }
                 Text(
                     text = "Authors",
-                    style = MaterialTheme.typography.h5,
+                    style = MaterialTheme.typography.h6,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = appInfo.authors.joinToString(separator = "\n") { it.id.toString() + " - " + it.name },
@@ -98,7 +102,10 @@ fun InfoScreen(
                 )
                 TextButton(onClick = onSendEmailRequested) {
                     Icon(Icons.Default.Email, contentDescription = "Localized description")
-                    Text("Contact")
+                    Text(
+                        text = "Contact",
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
@@ -109,18 +116,13 @@ fun InfoScreen(
 @Preview
 @Composable
 fun InfoScreenPreview() {
-    BattleshipmobileTheme {
+    BattleshipMobileTheme {
         InfoScreen(
             appInfo = AppInfo("x.y.z", listOf(
                 AppAuthor(
                     123,
                     "John Doe",
                     "johndoe@google.com"
-                ),
-                AppAuthor(
-                    420,
-                    "Hugh Jass",
-                    "HughJass@alunos.icel.pt"
                 )
             )),
             onBackRequested = {}

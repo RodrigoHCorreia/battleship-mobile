@@ -18,7 +18,7 @@ import battleship.mobile.info.ui.InfoScreen
 import battleship.mobile.info.ui.InfoViewModel
 import battleship.mobile.info.ui.ServerInfoState
 import battleship.mobile.ui.RefreshingState
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 import battleship.mobile.utils.viewModelInit
 
 
@@ -55,7 +55,7 @@ class InfoActivity : ComponentActivity() {
 
             val serverInfo = viewModel.info?.getOrNull() ?: ServerInfo("x.y.z", emptyList())
 
-            BattleshipmobileTheme {
+            BattleshipMobileTheme {
                 InfoScreen(
                     appInfo = info.getApplicationInformation(),
                     state = ServerInfoState(serverInfo, loadingState),

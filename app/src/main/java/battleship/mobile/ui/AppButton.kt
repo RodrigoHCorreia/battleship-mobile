@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import battleship.mobile.ui.theme.BattleshipmobileTheme
+import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 @Composable
 fun AppButton(
@@ -35,7 +35,7 @@ fun AppButton(
 @Preview(showBackground = true)
 @Composable
 fun AppButtonPreview() {
-    BattleshipmobileTheme() {
+    BattleshipMobileTheme() {
         AppButton("Preview") { }
     }
 }

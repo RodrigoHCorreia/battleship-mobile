@@ -40,13 +40,15 @@ fun DrawerItem(
     Row(modifier = m) {
         Icon(
             imageVector = icon,
-            contentDescription = description
+            contentDescription = description,
+            tint = MaterialTheme.colors.primary
         )
         Spacer(Modifier.width(DRAWER_ICON_TEXT_SPACE.dp))
         Text(
             text = title,
             fontWeight = FontWeight.Black,
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            color = MaterialTheme.colors.primary
         )
     }
 }
@@ -58,10 +60,11 @@ fun DrawerContent(
     onInfoClick : DrawerCallback
 ) {
     Text(
-        text = "Battleship Game",
+        text = "Battleship",
         modifier = Modifier.padding(16.dp),
         style = MaterialTheme.typography.h5,
-        fontWeight = FontWeight.Black
+        fontWeight = FontWeight.Black,
+        color = MaterialTheme.colors.primary
     )
     Divider()
     Column(
