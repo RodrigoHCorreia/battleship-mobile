@@ -1,8 +1,10 @@
 package battleship.mobile
 
 import android.app.Application
+import battleship.mobile.game.adapters.FakeMatch
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
+import battleship.mobile.game.domain.Match
 import battleship.mobile.info.domain.*
 import battleship.mobile.lobby.domain.ActiveGame
 import battleship.mobile.lobby.domain.Lobby
@@ -39,8 +41,8 @@ class BattleshipApplication : DependencyContainer, Application() {
     override val info : Info
         get() = FakeInfo()
 
-    override val game: Game
-        get() = FakeGame()
+    override val match: Match
+        get() = FakeMatch()
 
     override val lobby : Lobby
         get() = FakeLobby()
@@ -50,22 +52,6 @@ class BattleshipApplication : DependencyContainer, Application() {
 
     override val setupRepo: SetupRepository
         get() = EmptySetupRepository()
-
-}
-
-class FakeGame : Game {
-
-    override fun getInfo(): Flow<String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getBoard(): Flow<Board> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getEnemyBoard(): Flow<Board?> {
-        TODO("Not yet implemented")
-    }
 
 }
 
