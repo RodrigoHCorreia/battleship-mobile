@@ -2,11 +2,11 @@ package battleship.mobile
 
 import android.content.Context
 
-class TokenRepository(
-    val context : Context
+    class TokenRepository(
+    private val context : Context
 ) {
-    val tokenFile = "BattleshipToken"
-    val tokenKey = "Token"
+    private val tokenFile = "BattleshipToken"
+    private val tokenKey = "Token"
     private val prefs by lazy {
         context.getSharedPreferences(tokenFile, Context.MODE_PRIVATE)
     }

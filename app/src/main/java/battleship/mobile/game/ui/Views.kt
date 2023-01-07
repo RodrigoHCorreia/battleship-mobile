@@ -10,10 +10,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Cell
-
-typealias Callback = () -> Unit
+import battleship.mobile.game.domain.Coordinates
 
 const val BOARD_CELL_SIZE = 32
+const val BOARD_LINE_SIZE = 1
 
 private fun Cell.getColor()
     = when(this) {
@@ -25,7 +25,7 @@ private fun Cell.getColor()
     }
 
 @Composable
-fun CellView(cell : Cell, onClick : Callback?) {
+fun CellView(cell : Cell, onClick : (() -> Unit)?) {
     val color = cell.getColor()
     val m = Modifier
         .size(BOARD_CELL_SIZE.dp)
@@ -43,15 +43,18 @@ fun CellView(cell : Cell, onClick : Callback?) {
 }
 
 @Composable
-fun BoardView(board : Board, onCellClick : Callback?) {
+fun BoardView(board : Board, onCellClick : ((Coordinates) -> Unit)? = null) {
     val rows = board.cells.size
     val columns = board.cells.first().size
     Column {
         repeat(rows) { y ->
+            if (y != 0) Spacer(Modifier.height(BOARD_LINE_SIZE.dp))
             Row {
                 repeat(columns) { x ->
+                    if (x != 0) Spacer(Modifier.width(BOARD_LINE_SIZE.dp))
                     val cell = board.cells[y][x]
-                    CellView(cell, onCellClick)
+                    val onClick = onCellClick?.let { {it(Coordinates(x, y))} }
+                    CellView(cell, onClick)
                 }
             }
         }
@@ -61,8 +64,20 @@ fun BoardView(board : Board, onCellClick : Callback?) {
 @Preview(showBackground = true)
 @Composable
 private fun CellPreview() {
-    val cell = Cell.EMPTY
+    val cell = Cell.HIT
     CellView(cell, null)
 }
 
+
+@Preview(showBackground = true)
+@Composable
+private fun BoardPreview() {
+    val board = Board(List(10) { List(10)  {
+        listOf(Cell.EMPTY, Cell.HIT, Cell.SHIP, Cell.MISS).random() // Random colors! :D
+    } })
+    BoardView(
+        board = board,
+        onCellClick = { }
+    )
+}
 

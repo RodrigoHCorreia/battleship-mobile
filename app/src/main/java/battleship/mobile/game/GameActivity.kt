@@ -13,31 +13,38 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import battleship.mobile.BattleshipApplication
 import battleship.mobile.DependencyContainer
 import battleship.mobile.TAG
+import battleship.mobile.game.domain.GameFight
+import battleship.mobile.game.domain.GamePlanning
+import battleship.mobile.game.domain.GameWaiting
 import battleship.mobile.game.ui.GameScreen
 import battleship.mobile.game.ui.GameViewModel
 import battleship.mobile.utils.viewModelInit
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class GameActivity : ComponentActivity() {
+private const val INVALID_GAME_ID = -1
+private const val REFRESH_PERIOD_MS = 1000
 
+class GameActivity : ComponentActivity() {
 
     private val viewModel by viewModels<GameViewModel> {
         val dependencies = (application as DependencyContainer)
         viewModelInit {
-            GameViewModel(dependencies.game)
+            val gameID = intent.getIntExtra(GAME_ID_EXTRA, INVALID_GAME_ID)
+            check(gameID != INVALID_GAME_ID)
+            GameViewModel(gameID, dependencies.match)
         }
     }
 
     companion object {
-        fun navigate(origin : Context) {
+        const val GAME_ID_EXTRA = "GAME_ID"
+        fun navigate(origin : Context, gameID : Int) {
             with(origin) {
                 startActivity(
                     Intent(this, GameActivity::class.java).also {
-                        //TODO add game details
+                        it.putExtra(GAME_ID_EXTRA, gameID)
                     }
                 )
             }
@@ -48,19 +55,43 @@ class GameActivity : ComponentActivity() {
         super.onCreate(savedInstanceState, persistentState)
 
         setContent {
-            val uiState by viewModel.uiState.collectAsState() // TODO We are using by instead of =, is that good?
+            val game by viewModel.game.collectAsState()
             GameScreen(
-                state = uiState,
+                game = game,
                 onBackRequested = { finish() },
-                onShootRequested = { Log.v(TAG, "$it") }
+                onPlaceRequested = {
+
+                },
+                onShootRequested = { target ->
+                    viewModel.makeShot(target)
+                },
+                onForfeitRequested = {
+                    viewModel.forfeit()
+                }
             )
         }
 
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-
+                // Responsible for refreshing!
+                // TODO: This polling is hacky and wont work every time, not a good idea is it?
+                viewModel.game.collect {
+                    when(it) {
+                        is GameFight -> if(!it.yourTurn) viewModel.refresh()
+                        is GamePlanning -> {
+                            Log.v(TAG, "Refreshing at GamePlanning")
+                            TODO()
+                        }
+                        is GameWaiting ->  {
+                            Log.v(TAG, "Refreshing at GameWaiting")
+                            delay(1000)
+                            viewModel.refresh()
+                        }
+                        null -> {
+                            // Question for others, why refresh here and not onCreate()?
+                            viewModel.refresh()
+                        }
+                    }
                 }
             }
         }
