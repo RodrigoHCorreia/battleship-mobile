@@ -3,6 +3,8 @@ package battleship.mobile
 import android.app.Application
 import battleship.mobile.game.adapters.FakeMatch
 import battleship.mobile.game.domain.Match
+import battleship.mobile.info.adapters.HttpInfo
+import battleship.mobile.info.adapters.ServerInfoDtoProperties
 import battleship.mobile.info.domain.*
 import battleship.mobile.main.lobby.domain.ActiveGame
 import battleship.mobile.main.lobby.domain.Lobby
@@ -10,9 +12,14 @@ import battleship.mobile.main.social.domain.Social
 import battleship.mobile.main.social.domain.User
 import battleship.mobile.setup.domain.Setup
 import battleship.mobile.setup.domain.SetupRepository
+import battleship.mobile.utils.hypermedia.SubEntity
+import battleship.mobile.utils.hypermedia.SubEntityDeserializer
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.delay
+import okhttp3.Cache
 import okhttp3.OkHttpClient
+import java.net.URL
 
 const val TAG = "BattleShipApplication"
 
@@ -29,27 +36,43 @@ val appInfo = AppInfo(
 
 class BattleshipApplication : DependencyContainer, Application() {
 
-    val jsonFormatter : Gson
-        get() = Gson()
+    private val httpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .cache(Cache(directory = cacheDir, maxSize = 50 * 1024 * 1024))
+            .build()
+    }
 
-    val httpClient : OkHttpClient
-        get() = OkHttpClient()
+    private val jsonFormatter: Gson by lazy {
+        GsonBuilder()
+            .registerTypeHierarchyAdapter(
+                SubEntity::class.java,
+                SubEntityDeserializer<ServerInfoDtoProperties>(ServerInfoDtoProperties::class.java)
+            )
+            .create()
+    }
 
-    override val info : Info
-        get() = FakeInfo()
+    override val info: Info by lazy {
+        HttpInfo(
+            infoUrl = URL(BASE_URL),
+            httpClient = httpClient,
+            jsonEncoder = jsonFormatter,
+        )
+    }
+    override val match: Match by lazy {
+        FakeMatch()
+    }
 
-    override val match: Match
-        get() = FakeMatch()
+    override val lobby : Lobby by lazy {
+        FakeLobby()
+    }
 
-    override val lobby : Lobby
-        get() = FakeLobby()
+    override val social: Social by lazy {
+        FakeSocial()
+    }
 
-    override val social: Social
-        get() = FakeSocial()
-
-    override val setupRepo: SetupRepository
-        get() = EmptySetupRepository()
-
+    override val setupRepo: SetupRepository by lazy {
+        EmptySetupRepository()
+    }
 }
 
 class FakeLobby : Lobby {
