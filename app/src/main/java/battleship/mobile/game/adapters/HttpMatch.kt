@@ -15,60 +15,53 @@ import java.net.URL
 class HttpMatch(
     val encoder : Gson,
     val client : OkHttpClient,
-    val context : Context
+    val context : Context,
+    val baseURL : String
 ) : Match {
 
     override suspend fun getInfo(gameID: Int): GameInfo {
-
-        val url = URL("")
+        val url = URL("$baseURL/games/$gameID/")
         val token = ""
         val request = buildGetRequest(url, token)
-        TODO()
+        val gameDto = request.send<GameDto>(client) {
+            handleResponse(it, GameDtoType.type)
+        }
+        if (gameDto.properties == null) throw UnexpectedException("Invalid Server Response!")
+        return gameDto.properties.toGameInfo()
     }
 
 
-    override suspend fun getBoard(gameId: Int): Board {
-        val url = URL("")
+    override suspend fun getBoard(gameID: Int): Board {
+        val url = URL("$baseURL/games/$gameID/board")
         val token = ""
 
-        /*
         val request = buildGetRequest(url, token)
-        val board : Board = request.send(client) { response ->
-            when(response.code) {
-                200 -> {
-                    val body = response.body ?: throw UnexpectedError
-                }
-
-                else -> throw UnknownError("")
-            }
+        val boardDto  = request.send<BoardDto>(client) {
+            handleResponse(it, BoardDtoType.type)
         }
 
-         */
-        TODO()
-        //return board;
+        if (boardDto.properties == null) throw UnexpectedException("Invalid Server Response!")
+        return boardDto.properties.toBoard()
     }
 
-    override suspend fun getEnemyBoard(gameId: Int): Board {
-        val url = URL("")
+    override suspend fun getEnemyBoard(gameID: Int): Board {
+        val url = URL("$baseURL/games/$gameID/enemyboard")
         val token = ""
 
-        TODO()
-        /*
-        val request = buildRequest(url, token)
-        val board = request.send(client) { response ->
-
-            null
+        val request = buildGetRequest(url, token)
+        val boardDto  = request.send<BoardDto>(client) {
+            handleResponse(it, BoardDtoType.type)
         }
-        return board
 
-         */
+        if (boardDto.properties == null) throw UnexpectedException("Invalid Server Response!")
+        return boardDto.properties.toBoard()
     }
 
-    override suspend fun getOpponent(gameId: Int): Int? {
+    override suspend fun getOpponent(gameID: Int): Int? {
         TODO()
     }
 
-    override suspend fun placeBoard(gameId: Int, board: BoardProposal): PlaceResult {
+    override suspend fun placeBoard(gameID: Int, board: BoardProposal): PlaceResult {
         val url = URL("")
         val token = ""
         TODO()

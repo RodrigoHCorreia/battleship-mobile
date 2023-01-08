@@ -7,23 +7,23 @@ interface Match {
     /**
      * @throws IllegalStateException If Game has not passed the planning phase yet
      */
-    suspend fun getBoard(gameId: Int): Board
+    suspend fun getBoard(gameID: Int): Board
 
     /**
      * @throws IllegalStateException If Game has not passed the planning phase yet
      */
-    suspend fun getEnemyBoard(gameId: Int): Board
+    suspend fun getEnemyBoard(gameID: Int): Board
 
     /**
      * @throws IllegalStateException If Game has not passed the waiting phase yet
      */
-    suspend fun getOpponent(gameId : Int): Int?
+    suspend fun getOpponent(gameID : Int): Int?
 
     // Actions
     /**
      * @throws IllegalStateException If Game is not in Planning Phase
      */
-    suspend fun placeBoard(gameId: Int, board: BoardProposal): PlaceResult
+    suspend fun placeBoard(gameID: Int, board: BoardProposal): PlaceResult
 
     /**
      * @throws IllegalStateException If game is not in fighting phase

@@ -7,5 +7,12 @@
     <string name="info_authors_display">Authors: </string>
     <string name="info_version_display">Version: </string>
     <string name="info_send_email">Contact</string>
-
+    <string-array name="tips">
+        <item>Do a binary search to find ships.</item>
+        <item>Hitting water is not good.</item>
+        <item>Our logo is the best part.</item>
+        <item>Muito simples mas do caraças.</item>
+        <item>SLB é o maior!</item>
+        <item>HE HE HE HA</item>
+    </string-array>
 </resources>

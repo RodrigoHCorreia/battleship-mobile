@@ -1,8 +1,10 @@
 package battleship.mobile.game.ui
 
 import android.util.Log
+import androidx.compose.ui.res.stringArrayResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import battleship.mobile.R
 import battleship.mobile.TAG
 import battleship.mobile.game.domain.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +14,8 @@ import kotlinx.coroutines.launch
 
 class GameViewModel(
     val gameID : Int,
-    val match : Match
+    val match : Match,
+    tips : List<String>
 ) : ViewModel() {
 
     /**
@@ -21,6 +24,8 @@ class GameViewModel(
      */
     private val _game = MutableStateFlow<Game?>(null)
     val game : StateFlow<Game?> = _game.asStateFlow()
+
+    val tip = tips.random()
 
     fun refresh() {
         viewModelScope.launch {

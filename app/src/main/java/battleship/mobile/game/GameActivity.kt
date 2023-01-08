@@ -13,9 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import battleship.mobile.DependencyContainer
+import battleship.mobile.BattleshipApplication
+import battleship.mobile.R
 import battleship.mobile.TAG
 import battleship.mobile.game.domain.GameFight
+import battleship.mobile.game.domain.GameFinished
 import battleship.mobile.game.domain.GamePlanning
 import battleship.mobile.game.domain.GameWaiting
 import battleship.mobile.game.ui.GameScreen
@@ -30,11 +32,12 @@ private const val REFRESH_PERIOD_MS = 1000
 class GameActivity : ComponentActivity() {
 
     private val viewModel by viewModels<GameViewModel> {
-        val dependencies = (application as DependencyContainer)
+        val app = (application as BattleshipApplication)
         viewModelInit {
             val gameID = intent.getIntExtra(GAME_ID_EXTRA, INVALID_GAME_ID)
             check(gameID != INVALID_GAME_ID)
-            GameViewModel(gameID, dependencies.match)
+            val tips = app.resources.getStringArray(R.array.tips).toList()
+            GameViewModel(gameID, app.match, tips)
         }
     }
 
@@ -58,6 +61,7 @@ class GameActivity : ComponentActivity() {
             val game by viewModel.game.collectAsState()
             GameScreen(
                 game = game,
+                tip = viewModel.tip,
                 onBackRequested = { finish() },
                 onPlaceRequested = {
 
@@ -91,6 +95,7 @@ class GameActivity : ComponentActivity() {
                             // Question for others, why refresh here and not onCreate()?
                             viewModel.refresh()
                         }
+                        is GameFinished -> { /* NOTHING */ }
                     }
                 }
             }
