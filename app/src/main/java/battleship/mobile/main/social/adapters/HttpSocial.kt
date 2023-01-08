@@ -8,9 +8,8 @@ class HttpSocial : Social {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getByName(): User? {
+    override suspend fun searchUserByName(name : String): List<User> {
         TODO("Not yet implemented")
     }
-
 }
 

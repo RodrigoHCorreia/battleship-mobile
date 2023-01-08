@@ -2,19 +2,16 @@ package battleship.mobile
 
 import android.app.Application
 import battleship.mobile.game.adapters.FakeMatch
-import battleship.mobile.game.domain.Board
-import battleship.mobile.game.domain.Game
 import battleship.mobile.game.domain.Match
 import battleship.mobile.info.domain.*
-import battleship.mobile.lobby.domain.ActiveGame
-import battleship.mobile.lobby.domain.Lobby
-import battleship.mobile.social.domain.Social
-import battleship.mobile.social.domain.User
+import battleship.mobile.main.lobby.domain.ActiveGame
+import battleship.mobile.main.lobby.domain.Lobby
+import battleship.mobile.main.social.domain.Social
+import battleship.mobile.main.social.domain.User
 import battleship.mobile.setup.domain.Setup
 import battleship.mobile.setup.domain.SetupRepository
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 
 const val TAG = "BattleShipApplication"
@@ -32,10 +29,10 @@ val appInfo = AppInfo(
 
 class BattleshipApplication : DependencyContainer, Application() {
 
-    override val jsonFormatter : Gson
+    val jsonFormatter : Gson
         get() = Gson()
 
-    override val httpClient : OkHttpClient
+    val httpClient : OkHttpClient
         get() = OkHttpClient()
 
     override val info : Info
@@ -85,7 +82,6 @@ class FakeSocial : Social {
         delay(3000)
         return buildList { repeat(10) { add(aUser) } }
     }
-
 }
 
 class FakeInfo : Info {
