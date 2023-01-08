@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">battleship-mobile</string>
+    <string name="app_name">Battleship-mobile</string>
     <string name="info_no_suitable_app">Could not find a suitable application</string>
     <string name="app_title">Battleship</string>
     <string name="info_server_info_display">Server Info: </string>
@@ -7,6 +7,12 @@
     <string name="info_authors_display">Authors: </string>
     <string name="info_version_display">Version: </string>
     <string name="info_send_email">Contact</string>
+    <string name="lobby_game">"Game "</string>
+    <string name="lobby_play">Play</string>
+    <string name="lobby_active_games">Active Games</string>
+    <string name="lobby_match">Match</string>
+    <string name="game_refresh_screen">Refreshing!</string>
+    <string name="game_waiting_screen">Waiting!</string>
     <string-array name="tips">
         <item>Do a binary search to find ships.</item>
         <item>Hitting water is not good.</item>

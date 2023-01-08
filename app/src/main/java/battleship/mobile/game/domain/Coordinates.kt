@@ -4,6 +4,9 @@ data class Coordinates(
     val x : Int,
     val y : Int
 ) {
-    //TODO: Add Requires
+    init {
+        require(x in 0..9)
+        require(y in 0..9)
+    }
 }
 
