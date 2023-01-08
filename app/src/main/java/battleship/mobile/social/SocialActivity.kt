@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import battleship.mobile.DependencyContainer
 import battleship.mobile.FakeSocial
 import battleship.mobile.social.domain.SocialViewModel
 import battleship.mobile.social.ui.SocialScreen
@@ -16,7 +17,7 @@ import battleship.mobile.utils.viewModelInit
 
 class SocialActivity : ComponentActivity() {
 
-    val social = FakeSocial()
+    val social by lazy { (application as DependencyContainer).social }
 
     private val viewModel by viewModels<SocialViewModel> {
         viewModelInit {

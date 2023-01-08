@@ -5,8 +5,9 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import battleship.mobile.info.ui.InfoScreenTag
-import battleship.mobile.lobby.ui.LobbyScreenTag
-import battleship.mobile.login.ui.LoginScreenTag
+import battleship.mobile.lobby_to_removed.lobby.ui.LobbyScreenTag
+import battleship.mobile.login_to_be_removed.ui.LoginScreenTag
+import battleship.mobile.lobby_to_removed.lobby.LobbyActivity
 import battleship.mobile.social.ui.SocialScreenTag
 import battleship.mobile.ui.InfoButtonTag
 import battleship.mobile.ui.LogoutButtonTag
