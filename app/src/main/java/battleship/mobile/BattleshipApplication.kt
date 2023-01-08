@@ -57,6 +57,7 @@ class BattleshipApplication : DependencyContainer, Application() {
             httpClient = httpClient,
             jsonEncoder = jsonFormatter,
         )
+//        FakeInfo()
     }
     override val match: Match by lazy {
         FakeMatch()
@@ -114,7 +115,8 @@ class FakeInfo : Info {
         return ServerInfo(
             "0.0.1-FAKE",
             listOf(
-                ServerAuthor(1, "adolfo", "adolfmorg@gmail.com")
+                ServerAuthor(1, "Adolfo Morgado", "adolfomorgado@gmail.com"),
+                ServerAuthor(2, "Rodrigo Correia", "rodrigohcorreia@gmail.com")
             )
         )
     }

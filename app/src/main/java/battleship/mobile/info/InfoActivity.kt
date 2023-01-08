@@ -62,7 +62,7 @@ class InfoActivity : ComponentActivity() {
     private fun openSendEmail() {
         try {
             val intent =
-                Intent(Intent.ACTION_SENDTO).apply { //TODO: Change this so email is only sent to developer clicked.
+                Intent(Intent.ACTION_SENDTO).apply {
                     data = Uri.parse("mailto:")
                     putExtra(Intent.EXTRA_EMAIL, info
                         .getApplicationInformation()
