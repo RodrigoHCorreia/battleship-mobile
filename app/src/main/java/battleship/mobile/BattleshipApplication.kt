@@ -1,31 +1,25 @@
 package battleship.mobile
 
-//import androidx.work.* TODO: WE NEED TO ADD THIS
 import android.app.Application
+import battleship.mobile.game.adapters.FakeMatch
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
-import battleship.mobile.info.adapters.HttpInfo
-import battleship.mobile.info.adapters.ServerInfoDtoProperties
+import battleship.mobile.game.domain.Match
 import battleship.mobile.info.domain.*
 import battleship.mobile.lobby.domain.ActiveGame
 import battleship.mobile.lobby.domain.Lobby
-import battleship.mobile.setup.domain.Setup
-import battleship.mobile.setup.domain.SetupRepository
 import battleship.mobile.social.domain.Social
 import battleship.mobile.social.domain.User
-import battleship.mobile.utils.hypermedia.SubEntity
-import battleship.mobile.utils.hypermedia.SubEntityDeserializer
+import battleship.mobile.setup.domain.Setup
+import battleship.mobile.setup.domain.SetupRepository
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import okhttp3.Cache
 import okhttp3.OkHttpClient
-import java.net.URL
 
 const val TAG = "BattleShipApplication"
 
-private val battleshipAPIHome = URL("http://adolfomorgado.com:8080")
+const val BASE_URL = "adolfomorgado.com:8080"
 
 val appInfo = AppInfo(
     "BattleShip App v0.1",
@@ -38,33 +32,19 @@ val appInfo = AppInfo(
 
 class BattleshipApplication : DependencyContainer, Application() {
 
-    private val httpClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .cache(Cache(directory = cacheDir, maxSize = 50 * 1024 * 1024))
-            .build()
-    }
+    override val jsonFormatter : Gson
+        get() = Gson()
 
-    private val jsonFormatter: Gson by lazy {
-        GsonBuilder()
-            .registerTypeHierarchyAdapter(
-                SubEntity::class.java,
-                SubEntityDeserializer<ServerInfoDtoProperties>(ServerInfoDtoProperties::class.java)
-            )
-            .create()
-    }
+    override val httpClient : OkHttpClient
+        get() = OkHttpClient()
 
-    override val info: Info by lazy {
-        HttpInfo(
-            infoUrl = battleshipAPIHome,
-            httpClient = httpClient,
-            jsonEncoder = jsonFormatter,
-        )
-    }
+    override val info : Info
+        get() = FakeInfo()
 
-    override val game: Game
-        get() = FakeGame()
+    override val match: Match
+        get() = FakeMatch()
 
-    override val lobby: Lobby
+    override val lobby : Lobby
         get() = FakeLobby()
 
     override val social: Social
@@ -73,21 +53,6 @@ class BattleshipApplication : DependencyContainer, Application() {
     override val setupRepo: SetupRepository
         get() = EmptySetupRepository()
 
-    class FakeGame : Game {
-
-        override fun getInfo(): Flow<String> {
-            TODO("Not yet implemented")
-        }
-
-        override fun getBoard(): Flow<Board> {
-            TODO("Not yet implemented")
-        }
-
-        override fun getEnemyBoard(): Flow<Board?> {
-            TODO("Not yet implemented")
-        }
-
-    }
 }
 
 class FakeLobby : Lobby {
@@ -123,7 +88,6 @@ class FakeSocial : Social {
 
 }
 
-@Suppress("unused")
 class FakeInfo : Info {
 
     override suspend fun getServerInformation(): ServerInfo {
@@ -131,7 +95,7 @@ class FakeInfo : Info {
         return ServerInfo(
             "0.0.1-FAKE",
             listOf(
-                ServerAuthor(1, "adolfo", "adolfomorgado@gmail.com")
+                ServerAuthor(1, "adolfo", "adolfmorg@gmail.com")
             )
         )
     }
@@ -149,4 +113,3 @@ class EmptySetupRepository : SetupRepository {
         set(value) {}
 
 }
-
