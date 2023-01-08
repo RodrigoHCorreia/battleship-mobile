@@ -83,7 +83,6 @@ fun MainScreen(
             Column(
                 modifier = Modifier
                     .padding(it)
-                    .fillMaxSize()
             ) {
                 when(screen) {
                     Screen.LOBBY -> LobbyScreen()

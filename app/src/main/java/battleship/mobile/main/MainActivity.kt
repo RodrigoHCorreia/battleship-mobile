@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import battleship.mobile.DependencyContainer
 import battleship.mobile.info.InfoActivity
 import battleship.mobile.main.lobby.ui.LobbyViewModel
+import battleship.mobile.main.social.ui.SocialViewModel
 import battleship.mobile.main.ui.MainScreen
 import battleship.mobile.main.ui.MainViewModel
-import battleship.mobile.social.domain.SocialViewModel
 import battleship.mobile.utils.viewModelInit
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -32,11 +32,11 @@ class MainActivity : ComponentActivity() {
         viewModelInit { LobbyViewModel(dependencies.lobby) }
     }
 
-    /*
+
     private val socialViewModel by viewModels<SocialViewModel> {
         viewModelInit { SocialViewModel(dependencies.social) }
     }
-     */
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
             val scaffoldState = rememberScaffoldState()
 
             val screen by mainViewModel.screen.collectAsState()
+
             MainScreen(
                 screen = screen,
                 onDrawerRequested = {

@@ -7,5 +7,5 @@ import androidx.compose.runtime.Composable
 fun LobbyScreen(
 
 ) {
-    Text("This is the lobby screen!")
+
 }

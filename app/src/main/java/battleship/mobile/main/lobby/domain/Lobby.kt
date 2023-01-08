@@ -6,5 +6,7 @@ data class ActiveGame(
 )
 
 interface Lobby {
+
+
     suspend fun getActiveGames() : List<ActiveGame>
 }
