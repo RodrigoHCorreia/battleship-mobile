@@ -4,8 +4,7 @@ import battleship.mobile.info.domain.ServerAuthor
 import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.utils.hypermedia.SirenEntity
 
-
-data class AuthorDto(
+data class ServerAuthorDto(
     val name : String,
     val email : String,
     val id : Int,
@@ -17,16 +16,21 @@ data class AuthorDto(
     )
 }
 
-data class InfoDtoProperties(
+data class ServerInfoDtoProperties(
     val version : String,
-    val authors : List<AuthorDto>
-)
-
-typealias InfoDto = SirenEntity<InfoDtoProperties>
-val InfoDtoType = SirenEntity.getType<InfoDtoProperties>()
-
-fun InfoDtoProperties.toServerInfo() =
-    ServerInfo(
-        version,
-        authors.map { it.toServerAuthor() }
+    val authors : List<ServerAuthorDto>
+) {
+    fun toServerInfo() = ServerInfo(
+        version = version,
+        serverAuthors = authors.map { it.toServerAuthor() }
     )
+}
+
+typealias ServerInfoDto = SirenEntity<ServerInfoDtoProperties>
+val ServerInfoDtoType = SirenEntity.getType<ServerInfoDtoProperties>()
+
+fun ServerInfo(dto: ServerInfoDto) : ServerInfo{
+val properties = dto.properties
+    require(properties != null) { "ServerInfoDto properties are null" }
+    return properties.toServerInfo()
+}

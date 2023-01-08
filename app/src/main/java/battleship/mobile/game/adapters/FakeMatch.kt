@@ -11,19 +11,19 @@ class FakeMatch : Match {
         )
     }
 
-    override suspend fun getBoard(gameId: Int): Board {
+    override suspend fun getBoard(gameID: Int): Board {
         return Board(List(10) { List(10)  { Cell.EMPTY } })
     }
 
-    override suspend fun getEnemyBoard(gameId: Int): Board {
+    override suspend fun getEnemyBoard(gameID: Int): Board {
         return Board(List(10) { List(10)  { Cell.EMPTY } })
     }
 
-    override suspend fun getOpponent(gameId: Int): Int? {
+    override suspend fun getOpponent(gameID: Int): Int? {
         return 2346
     }
 
-    override suspend fun placeBoard(gameId: Int, board: BoardProposal): PlaceResult {
+    override suspend fun placeBoard(gameID: Int, board: BoardProposal): PlaceResult {
         TODO()
     }
 

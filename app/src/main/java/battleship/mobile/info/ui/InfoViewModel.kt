@@ -14,7 +14,6 @@ class InfoViewModel (
     private val infoService: Info
 ) : ViewModel() {
 
-
     private var _info by mutableStateOf<Result<ServerInfo>?>(null)
     val info: Result<ServerInfo>?
         get() = _info

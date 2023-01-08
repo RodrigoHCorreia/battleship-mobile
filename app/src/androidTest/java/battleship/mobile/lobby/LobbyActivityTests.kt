@@ -3,11 +3,10 @@ package battleship.mobile.lobby
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import battleship.mobile.info.ui.InfoScreenTag
-import battleship.mobile.lobby_to_removed.lobby.ui.LobbyScreenTag
-import battleship.mobile.login_to_be_removed.ui.LoginScreenTag
-import battleship.mobile.lobby_to_removed.lobby.LobbyActivity
+import battleship.mobile.lobby.ui.LobbyScreenTag
 import battleship.mobile.social.ui.SocialScreenTag
 import battleship.mobile.ui.InfoButtonTag
 import battleship.mobile.ui.LogoutButtonTag
@@ -68,17 +67,18 @@ class LobbyActivityTests {
     }
 
     @Test
-    fun pressing_logout_displays_login_activity() {
+    fun pressing_logout_ends_lobby_activity() {
 
         // Act
-        testRule.onNodeWithTag(LoginScreenTag).assertDoesNotExist()
+        testRule.onNodeWithTag(LobbyScreenTag).assertExists()
         testRule.onNodeWithTag(OpenDrawerTag).performClick()
         testRule.waitForIdle()
         testRule.onNodeWithTag(LogoutButtonTag).performClick()
         testRule.waitForIdle()
 
         // Assert
-        testRule.onNodeWithTag(LoginScreenTag).assertExists()
+        testRule.onNodeWithTag(LobbyScreenTag).assertDoesNotExist()
+        assert(testRule.activityRule.scenario.state == Lifecycle.State.DESTROYED)
     }
 
 }

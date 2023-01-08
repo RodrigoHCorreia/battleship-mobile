@@ -5,13 +5,21 @@ data class ServerAuthor(
     val name : String,
     val email : String
 ) {
-    // TODO add requires
+
+    init {
+        require(id >= 0) { "id must be >= 0" }
+        require(name.isNotBlank()) { "name must not be blank" }
+        require(email.isNotBlank()) { "email must not be blank" }
+    }
 }
 
 data class ServerInfo(
     val version : String,
     val serverAuthors : List<ServerAuthor>
 ) {
-    // TODO add requires
+    init {
+        require(version.isNotBlank()) { "version is blank" }
+        require(serverAuthors.isNotEmpty()) { "serverAuthors is empty" }
+    }
 }
 

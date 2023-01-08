@@ -12,7 +12,14 @@ enum class ShotResultDto {
 }
 
 enum class GameStateDto {
-    WAITING, PLANNING, FIGHTING, FINISHED
+    WAITING, PLANNING, FIGHTING, FINISHED;
+    fun toGameState() =
+        when(this) {
+            WAITING -> GameState.WAITING
+            PLANNING -> GameState.PLANNING
+            FIGHTING -> GameState.FIGHTING
+            FINISHED -> GameState.FINISHED
+        }
 }
 
 data class BoardDtoProperties(
@@ -34,8 +41,17 @@ data class GameDtoProperties(
     val opponent : Int?,
     val state : GameStateDto,
     val yourTurn : Boolean
-)
+) {
+    fun toGameInfo() =
+        GameInfo(
+            id = id,
+            state = state.toGameState(),
+            ranked = ranked
+        )
+}
 
+typealias BoardDto = SirenEntity<BoardDtoProperties>
+val BoardDtoType = SirenEntity.getType<BoardDtoProperties>()
 typealias GameDto = SirenEntity<GameDtoProperties>
 val GameDtoType = SirenEntity.getType<GameDtoProperties>()
 
