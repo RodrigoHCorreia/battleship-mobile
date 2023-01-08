@@ -20,28 +20,30 @@ const val SocialButtonTag = "Social"
 const val InfoButtonTag = "Info"
 const val LogoutButtonTag = "Logout"
 
-typealias DrawerCallback = () -> Unit
+data class DrawerItem(
+    val icon : ImageVector,
+    val title : String,
+    val description : String,
+    val onClick : () -> Unit,
+    val tag : String = ""
+)
 
 @Composable
-fun DrawerItem(
-    icon : ImageVector,
-    title : String,
-    description : String,
-    onClick : DrawerCallback,
-    tag : String
+fun DrawerItemView(
+    item : DrawerItem
 ) {
     val m = Modifier
-        .clickable(onClick = onClick)
-        .testTag(tag)
+        .clickable(onClick = item.onClick)
+        .testTag(item.tag)
     Row(modifier = m) {
         Icon(
-            imageVector = icon,
-            contentDescription = description,
+            imageVector = item.icon,
+            contentDescription = item.description,
             tint = MaterialTheme.colors.primary
         )
         Spacer(Modifier.width(DRAWER_ICON_TEXT_SPACE.dp))
         Text(
-            text = title,
+            text = item.title,
             fontWeight = FontWeight.Black,
             fontSize = 18.sp,
             color = MaterialTheme.colors.primary
@@ -50,81 +52,27 @@ fun DrawerItem(
 }
 
 @Composable
+fun DrawerHeaderView() {
+    Text(
+        text = "Battleship",
+        modifier = Modifier.padding(16.dp),
+        style = MaterialTheme.typography.h5,
+        fontWeight = FontWeight.Black,
+        color = MaterialTheme.colors.primary
+    )
+}
+
+@Composable
 fun DrawerContent(
-    onLobbyClick : DrawerCallback,
-    onSocialClick : DrawerCallback,
-    onInfoClick : DrawerCallback,
-    onLogoutClick : DrawerCallback
+    drawerItems : List<DrawerItem>
 ) {
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
-            Text(
-                text = "Battleship",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Black,
-                color = MaterialTheme.colors.primary
-            )
-            Divider()
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    DrawerItem(
-                        icon = Icons.Default.PlayArrow,
-                        title = "Game",
-                        description = "Get Game Lobby",
-                        onClick = onLobbyClick,
-                        tag = GameButtonTag
-                    )
-                    DrawerItem(
-                        icon = Icons.Default.Star,
-                        title = "Social",
-                        description = "Show Social Screen",
-                        onClick = onSocialClick,
-                        tag = SocialButtonTag
-                    )
-                    DrawerItem(
-                        icon = Icons.Default.Info,
-                        title = "Info",
-                        description = "Show application and server Info",
-                        onClick = onInfoClick,
-                        tag = InfoButtonTag
-                    )
-                    DrawerItem(
-                        icon = Icons.Default.ExitToApp,
-                        title = "Logout",
-                        description = "Ends user session and goes to login",
-                        onClick = onLogoutClick,
-                        tag = LogoutButtonTag
-                    )
-                }
-                Row() {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = "Username",
-                        tint = MaterialTheme.colors.primary
-                    )
-                    Spacer(Modifier.width(DRAWER_ICON_TEXT_SPACE.dp))
-                    Text(
-                        text = "User",
-                        fontWeight = FontWeight.Black,
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
+    Column(
+    ) {
+        DrawerHeaderView()
+        Divider()
+        Column {
+            drawerItems.forEach { item ->
+                DrawerItemView(item = item)
             }
         }
     }
