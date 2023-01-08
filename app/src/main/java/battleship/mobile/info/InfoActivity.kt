@@ -41,16 +41,17 @@ class InfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetchInfo()
-
+        Log.v(TAG, "InfoActivity.onCreate()")
+        if (viewModel.info == null) {
+            viewModel.fetchInfo()
+        }
         setContent {
-
-            val serverInfo = viewModel.info?.getOrNull() //?: TODO("porque é que tas a dar fake")
+            val serverInfo = viewModel.info?.getOrNull()
 
             BattleshipMobileTheme {
                 InfoScreen(
-                    appInfo = info.getApplicationInformation(),
                     serverInfo = serverInfo,
+                    appInfo = info.getApplicationInformation(),
                     onSendEmailRequested = { openSendEmail() },
                     onBackRequested = { finish() }
                 )
@@ -60,18 +61,18 @@ class InfoActivity : ComponentActivity() {
 
     private fun openSendEmail() {
         try {
-            val intent = Intent(Intent.ACTION_SENDTO).apply { //TODO: Change this so email is only sent to developer clicked.
-                data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, info
-                    .getApplicationInformation()
-                    .authors
-                    .map { it.email }
-                    .toTypedArray())
-            }
+            val intent =
+                Intent(Intent.ACTION_SENDTO).apply { //TODO: Change this so email is only sent to developer clicked.
+                    data = Uri.parse("mailto:")
+                    putExtra(Intent.EXTRA_EMAIL, info
+                        .getApplicationInformation()
+                        .authors
+                        .map { it.email }
+                        .toTypedArray())
+                }
 
             startActivity(intent)
-        }
-        catch (e: ActivityNotFoundException) {
+        } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Failed to send email", e)
             Toast
                 .makeText(
