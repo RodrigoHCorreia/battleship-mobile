@@ -13,5 +13,12 @@
     <string name="lobby_match">Match</string>
     <string name="game_refresh_screen">Refreshing!</string>
     <string name="game_waiting_screen">Waiting!</string>
-
+    <string-array name="tips">
+        <item>Do a binary search to find ships.</item>
+        <item>Hitting water is not good.</item>
+        <item>Our logo is the best part.</item>
+        <item>Muito simples mas do caraças.</item>
+        <item>SLB é o maior!</item>
+        <item>HE HE HE HA</item>
+    </string-array>
 </resources>

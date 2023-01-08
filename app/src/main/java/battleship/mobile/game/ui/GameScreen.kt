@@ -1,16 +1,14 @@
 package battleship.mobile.game.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
+import battleship.mobile.R
 import battleship.mobile.game.domain.*
 import battleship.mobile.ui.AppButton
 import battleship.mobile.ui.NavigationHandlers
@@ -18,29 +16,41 @@ import battleship.mobile.ui.TopBar
 import battleship.mobile.ui.theme.BattleshipMobileTheme
 
 @Composable
-fun LoadingScreen() {
-    Text("Refreshing!") // TODO: make a pretty refreshing/loading screen
+fun LoadingScreen(tip : String = "") {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text("Loading!", style = MaterialTheme.typography.h2)
+        CircularProgressIndicator()
+        TipView(tip)
+    }
 }
 
 
 @Composable
 fun WaitingScreen(
-    game : GameWaiting
+    game : GameWaiting,
+    tip : String
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.SpaceAround,
     ) {
-        Text(
-            text = "Waiting!",
-        ) // TODO: Add H1 style
-        Text(
-            text = "Game ID: ${55555}" //TODO(put actual game id here)
-        ) // TODO: Add Grey subtitle (as if it were debug text!"
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("Waiting", style = MaterialTheme.typography.h2)
 
+            Text("Game ID: ${game.id}", style = MaterialTheme.typography.subtitle2)
+        }
+        LinearProgressIndicator()
+        TipView(tip = tip)
     }
 }
 
@@ -50,10 +60,6 @@ fun PlanningScreen(
     onPlaceRequested : () -> Unit,
 ) {
     Column {
-
-        AppButton(text = "Submit") {
-            onPlaceRequested()
-        }
     }
 }
 
@@ -62,7 +68,13 @@ fun FightingScreen(
     game : GameFight,
     onShootRequested: (Coordinates) -> Unit
 ) {
-    Column {
+    //TODO perhaps make this colum scrollable
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         // Player Board
         BoardView(game.board)
 
@@ -74,7 +86,9 @@ fun FightingScreen(
 }
 
 @Composable
-fun FinishedScreen(board : Board, enemy : Board) {
+fun FinishedScreen(
+    game : GameFinished
+) {
     Column {
 
     }
@@ -83,6 +97,7 @@ fun FinishedScreen(board : Board, enemy : Board) {
 @Composable
 fun GameScreen(
     game : Game?,
+    tip : String = "",
     onBackRequested : () -> Unit = { },
     onPlaceRequested : () -> Unit = { },
     onForfeitRequested: () -> Unit = { }, // This is not implemented yet!
@@ -95,8 +110,8 @@ fun GameScreen(
         ) {
             it.calculateBottomPadding()
             when(game) {
-                null -> LoadingScreen()
-                is GameWaiting -> WaitingScreen(game)
+                null -> LoadingScreen(tip)
+                is GameWaiting -> WaitingScreen(game, tip)
                 is GamePlanning -> PlanningScreen(
                     game = game,
                     onPlaceRequested = { TODO() }
@@ -105,11 +120,22 @@ fun GameScreen(
                     game = game,
                     onShootRequested = onShootRequested
                 )
+                is GameFinished -> FinishedScreen(game = game)
             }
         }
     }
 }
 
+@Preview
+@Composable
+fun GameScreenLoadingPreview() {
+    BattleshipMobileTheme {
+        GameScreen(
+            game = null,
+            tip = stringArrayResource(id = R.array.tips).random()
+        )
+    }
+}
 
 @Preview
 @Composable
@@ -120,6 +146,7 @@ fun GameScreenWaitingPreview() {
                 id = 100,
                 ranked = true
             ),
+            tip = stringArrayResource(id = R.array.tips).random()
         )
     }
 }

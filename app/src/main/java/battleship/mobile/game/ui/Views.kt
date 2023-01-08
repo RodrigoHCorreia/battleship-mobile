@@ -3,6 +3,8 @@ package battleship.mobile.game.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,6 +16,14 @@ import battleship.mobile.game.domain.Coordinates
 
 const val BOARD_CELL_SIZE = 32
 const val BOARD_LINE_SIZE = 1
+
+@Composable
+fun TipView(tip : String) {
+    Text(
+        text = tip,
+        style = MaterialTheme.typography.subtitle1
+    )
+}
 
 private fun Cell.getColor()
     = when(this) {
