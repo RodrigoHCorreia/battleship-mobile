@@ -9,9 +9,6 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 
 interface DependencyContainer {
-    val jsonFormatter : Gson
-    val httpClient : OkHttpClient
-
     val info : Info
     val game : Game
     val lobby : Lobby

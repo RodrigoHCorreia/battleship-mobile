@@ -1,5 +1,6 @@
 package battleship.mobile.info.adapters
 
+import battleship.mobile.appInfo
 import battleship.mobile.info.domain.AppInfo
 import battleship.mobile.info.domain.Info
 import battleship.mobile.info.domain.ServerInfo
@@ -14,26 +15,29 @@ import java.lang.reflect.Type
 import java.net.URL
 
 class HttpInfo(
-    private val url : URL,
+    private val infoUrl: URL,
     private val httpClient: OkHttpClient,
-    private val jsonEncoder: Gson,
-    private val appInfo : AppInfo
-) : Info {
-    override suspend fun getServerInformation(): ServerInfo { //TODO RECIEVE SERVER INFO
+    private val jsonEncoder: Gson
+    ) : Info {
 
-        val request = buildRequest(url)
+    override suspend fun getServerInformation(): ServerInfo {
+        val request = buildRequest(url = infoUrl)
 
-        val infoDto = request.send(httpClient) {
-            handleResponse<InfoDto>(it, InfoDtoType.type)
+        val serverInfoDto = request.send(httpClient) { response ->
+            handleResponse<ServerInfoDto>(response, ServerInfoDtoType.type)
         }
-        val prop = infoDto.properties
-        checkNotNull(prop) // TODO: switch this out to throw a custom exception
 
-        return prop.toServerInfo()
+        return ServerInfo(serverInfoDto)
     }
 
     override fun getApplicationInformation(): AppInfo {
         return appInfo
+    }
+
+    private fun buildRequest(url: URL): Request {
+        return Request.Builder()
+            .url(url)
+            .build()
     }
 
     private fun <T> handleResponse(response: Response, type: Type): T {
@@ -44,22 +48,20 @@ class HttpInfo(
                 jsonEncoder.fromJson<T>(body, type)
             }
             catch (e: JsonSyntaxException) {
-                TODO()
-                //throw UnexpectedResponseException(response)
+                throw UnexpectedResponseException(response)
             }
         }
         else {
-            TODO()
-            //throw UnexpectedResponseException(response = response)
+            throw UnexpectedResponseException(response)
         }
     }
-
-    private fun buildRequest(url : URL) =
-        with(Request.Builder()) {
-            this
-        }.url(url).build()
-
-
 }
 
+//TODO: REMOVE THIS FROM THIS FILE AND MOVE IT TO A PROPER ERROR HANDLING FILE
+abstract class ApiException(msg: String) : Exception(msg)
 
+abstract class AppException(msg: String) : Exception(msg)
+
+class UnexpectedResponseException(
+    private val response: Response? = null
+) : ApiException("Unexpected ${response?.code} response from the API.")

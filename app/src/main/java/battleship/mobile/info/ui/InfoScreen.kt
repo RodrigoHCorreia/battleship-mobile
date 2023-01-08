@@ -20,8 +20,8 @@ const val InfoScreenTag = "InfoScreen"
 
 @Composable
 fun InfoScreen(
-    appInfo: AppInfo,
     serverInfo: ServerInfo? = null,
+    appInfo: AppInfo,
     onSendEmailRequested: () -> Unit = { },
     onBackRequested: () -> Unit
 ) {
