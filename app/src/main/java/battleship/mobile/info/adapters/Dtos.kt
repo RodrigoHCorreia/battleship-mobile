@@ -4,7 +4,6 @@ import battleship.mobile.info.domain.ServerAuthor
 import battleship.mobile.info.domain.ServerInfo
 import battleship.mobile.utils.hypermedia.SirenEntity
 
-
 data class ServerAuthorDto(
     val name : String,
     val email : String,
@@ -35,9 +34,3 @@ val properties = dto.properties
     require(properties != null) { "ServerInfoDto properties are null" }
     return properties.toServerInfo()
 }
-
-fun ServerInfoDtoProperties.toServerInfo() =
-    ServerInfo(
-        version,
-        authors.map { it.toServerAuthor() }
-    )

@@ -5,6 +5,7 @@ import android.app.Application
 import battleship.mobile.game.domain.Board
 import battleship.mobile.game.domain.Game
 import battleship.mobile.info.adapters.HttpInfo
+import battleship.mobile.info.adapters.ServerInfoDtoProperties
 import battleship.mobile.info.domain.*
 import battleship.mobile.lobby.domain.ActiveGame
 import battleship.mobile.lobby.domain.Lobby
@@ -12,6 +13,8 @@ import battleship.mobile.setup.domain.Setup
 import battleship.mobile.setup.domain.SetupRepository
 import battleship.mobile.social.domain.Social
 import battleship.mobile.social.domain.User
+import battleship.mobile.utils.hypermedia.SubEntity
+import battleship.mobile.utils.hypermedia.SubEntityDeserializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.delay
@@ -22,7 +25,7 @@ import java.net.URL
 
 const val TAG = "BattleShipApplication"
 
-private val battleshipAPIHome = URL("https://adolfomorgado.com:8080")
+private val battleshipAPIHome = URL("http://adolfomorgado.com:8080")
 
 val appInfo = AppInfo(
     "BattleShip App v0.1",
@@ -43,6 +46,10 @@ class BattleshipApplication : DependencyContainer, Application() {
 
     private val jsonFormatter: Gson by lazy {
         GsonBuilder()
+            .registerTypeHierarchyAdapter(
+                SubEntity::class.java,
+                SubEntityDeserializer<ServerInfoDtoProperties>(ServerInfoDtoProperties::class.java)
+            )
             .create()
     }
 
@@ -83,63 +90,63 @@ class BattleshipApplication : DependencyContainer, Application() {
     }
 }
 
-    class FakeLobby : Lobby {
+class FakeLobby : Lobby {
 
-        override suspend fun getActiveGames(): List<ActiveGame> {
-            delay(2000)
-            return listOf(
-                ActiveGame(1, "goncaloaps"),
-                ActiveGame(2, "admorgado"),
-                ActiveGame(3, "rodrigohcorreia"),
-            )
-        }
-
-    }
-
-    class FakeSocial : Social {
-
-        private val aUser = User(
-            id = 1,
-            username = "john_doe",
-            playCount = 2,
-            elo = 5
+    override suspend fun getActiveGames(): List<ActiveGame> {
+        delay(2000)
+        return listOf(
+            ActiveGame(1, "goncaloaps"),
+            ActiveGame(2, "admorgado"),
+            ActiveGame(3, "rodrigohcorreia"),
         )
-
-        override suspend fun searchUserByName(name: String): List<User> {
-            return emptyList()
-        }
-
-        override suspend fun getRanking(page: Int): List<User> {
-            delay(3000)
-            return buildList { repeat(10) { add(aUser) } }
-        }
-
     }
 
-    @Suppress("unused")
-    class FakeInfo : Info {
+}
 
-        override suspend fun getServerInformation(): ServerInfo {
-            delay(2000)
-            return ServerInfo(
-                "0.0.1-FAKE",
-                listOf(
-                    ServerAuthor(1, "adolfo", "adolfomorgado@gmail.com")
-                )
+class FakeSocial : Social {
+
+    private val aUser = User(
+        id = 1,
+        username = "john_doe",
+        playCount = 2,
+        elo = 5
+    )
+
+    override suspend fun searchUserByName(name: String): List<User> {
+        return emptyList()
+    }
+
+    override suspend fun getRanking(page: Int): List<User> {
+        delay(3000)
+        return buildList { repeat(10) { add(aUser) } }
+    }
+
+}
+
+@Suppress("unused")
+class FakeInfo : Info {
+
+    override suspend fun getServerInformation(): ServerInfo {
+        delay(2000)
+        return ServerInfo(
+            "0.0.1-FAKE",
+            listOf(
+                ServerAuthor(1, "adolfo", "adolfomorgado@gmail.com")
             )
-        }
-
-        override fun getApplicationInformation(): AppInfo {
-            return appInfo
-        }
-
+        )
     }
 
-    class EmptySetupRepository : SetupRepository {
-
-        override var setups: List<Setup>
-            get() = emptyList()
-            set(value) {}
-
+    override fun getApplicationInformation(): AppInfo {
+        return appInfo
     }
+
+}
+
+class EmptySetupRepository : SetupRepository {
+
+    override var setups: List<Setup>
+        get() = emptyList()
+        set(value) {}
+
+}
 

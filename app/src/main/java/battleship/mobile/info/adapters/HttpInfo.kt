@@ -42,10 +42,11 @@ class HttpInfo(
 
     private fun <T> handleResponse(response: Response, type: Type): T {
         val contentType = response.body?.contentType()
-        return if (response.isSuccessful && contentType != null && contentType == SirenMediaType) {
+        return if (response.isSuccessful && contentType != null /*&& contentType == SirenMediaType*/) {
             try {
                 val body = response.body?.string()
-                jsonEncoder.fromJson<T>(body, type)
+                println(body)
+                jsonEncoder.fromJson<T>(body, type) //TODO: This is giving us backend problems
             }
             catch (e: JsonSyntaxException) {
                 throw UnexpectedResponseException(response)
